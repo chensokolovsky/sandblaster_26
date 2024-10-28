@@ -21,6 +21,14 @@ The reverser (in the `reverse-sandbox/` folder) runs on any Python running platf
 
 SandBlaster requires Python3 for the reverser (in `reverse-sandbox/`).
 
+## Automated Usage
+* You can use the helper in `helpers/extract_sb.py` to:
+  * Download the kernel cache
+  * Extract the sandbox profiles (using Unicorn emulator)
+  * And decompile them all in one go!
+* Just make sure to `pip install 'unicorn<2.1'` beforehand (seems like 2.1 has an issue on ARM macOS currently).
+* Run `./helpers/extract_sb.py --version 17.6`
+
 ## Usage
 
 In order to use SandBlaster you need access to the binary sandbox profiles and the sandbox operations, a set of strings that define sandbox-specific actions. Sandbox profiles and sandbox operations are extracted from the kernel sandbox extension.
