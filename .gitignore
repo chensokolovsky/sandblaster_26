@@ -22,3 +22,9 @@ TAGS
 *.bin
 core
 .DS_STORE
+test_result_26/protobox/
+test_result_26/platform/
+test_result_26/collection/
+test_result_17/protobox/
+test_result_17/platform/
+test_result_17/collection/
