@@ -1,0 +1,250 @@
+ios 17
+=====
+
+protobox:
+
+                struct_size: 0xe
+                header: 0x8000
+                op_nodes_count: 0x3ba7
+                sb_ops_count: 0xbe
+                vars_count: 0x3
+                states_count: 0x0
+                num_profiles: 0x23d
+                re_table_count: 0x0
+                entitlements_count: 0x0
+
+                regex_table_offset: 0xe
+                pattern_vars_offset: 0xe
+                states_offset: 0x14
+                entitlements_offset: 0x14
+                profiles_offset: 0x14
+                profiles_end_offset: 0x35b94
+                operation_nodes_offset: 0x35b98
+                operation_nodes_size: 0x1dd38
+                base_adrr: 0x538d0
+
+
+
+ ios 26
+ =======
+
+
+ protobox:
+
+                 struct_size: 0xe
+                header: 0x8000
+                op_nodes_count: 0x9e1f
+                sb_ops_count: 0xc3
+                vars_count: 0x3
+                states_count: 0x0
+                num_profiles: 0x0
+                re_table_count: 0x3ad
+                entitlements_count: 0x0
+
+                regex_table_offset: 0xe
+                pattern_vars_offset: 0x768
+                states_offset: 0x76e
+                entitlements_offset: 0x76e
+                profiles_offset: 0x76e
+                profiles_end_offset: 0x76e
+                operation_nodes_offset: 0x770
+                operation_nodes_size: 0x4f0f8
+                base_adrr: 0x4f868
+
+
+ after fix:
+
+   				struct_size: 0xe
+                header: 0x8000
+                op_nodes_count: 0x9e1f
+                sb_ops_count: 0xc3
+                vars_count: 0x3
+                states_count: 0x0
+                num_profiles: 0x3ad
+                re_table_count: 0x0
+                entitlements_count: 0x0
+
+                regex_table_offset: 0xe
+                pattern_vars_offset: 0x10
+                states_offset: 0x16
+                entitlements_offset: 0x16
+                profiles_offset: 0x16
+                profiles_end_offset: 0x5a858
+                operation_nodes_offset: 0x5a858
+                operation_nodes_size: 0x4f0f8
+                base_adrr: 0xa9950
+
+
+
+================protobox ===========
+
+base address:
+342232, which is 
+
+
+profile_end_offset is 220052 which is 0x35b94
+
+self.profiles_end_offset = self.profiles_offset + (self.num_profiles * (self.sb_ops_count * INDEX_SIZE + PROFILE_OPS_OFFSET))
+
+220052 = 20 + (573 * (190 * 2 + 4))
+
+
+
+
+
+
+
+operation node offset 220056 (0x35b98)
+operation node size 122168 (0x1dd38)
+
+
+
+
+ios 17
+=====
+
+protobox:
+
+                struct_size: 0xe
+                header: 0x8000
+                op_nodes_count: 0x3ba7
+                sb_ops_count: 0xbe
+                vars_count: 0x3
+                states_count: 0x0
+                num_profiles: 0x23d
+                re_table_count: 0x0
+                entitlements_count: 0x0
+
+                regex_table_offset: 0xe
+                pattern_vars_offset: 0xe
+                states_offset: 0x14
+                entitlements_offset: 0x14
+                profiles_offset: 0x14
+                profiles_end_offset: 0x35b94
+                operation_nodes_offset: 0x35b98
+                operation_nodes_size: 0x1dd38
+                base_adrr: 0x538d0
+
+
+
+ ios 26
+ =======
+
+
+ protobox:
+
+                 struct_size: 0xe
+                header: 0x8000
+                op_nodes_count: 0x9e1f
+                sb_ops_count: 0xc3
+                vars_count: 0x3
+                states_count: 0x0
+                num_profiles: 0x0
+                re_table_count: 0x3ad
+                entitlements_count: 0x0
+
+                regex_table_offset: 0xe
+                pattern_vars_offset: 0x768
+                states_offset: 0x76e
+                entitlements_offset: 0x76e
+                profiles_offset: 0x76e
+                profiles_end_offset: 0x76e
+                operation_nodes_offset: 0x770
+                operation_nodes_size: 0x4f0f8
+                base_adrr: 0x4f868
+
+
+ after fix:
+
+                struct_size: 0xe
+                header: 0x8000
+                op_nodes_count: 0x9e1f
+                sb_ops_count: 0xc3
+                vars_count: 0x3
+                states_count: 0x0
+                num_profiles: 0x3ad
+                re_table_count: 0x0
+                entitlements_count: 0x0
+
+                regex_table_offset: 0xe
+                pattern_vars_offset: 0x10
+                states_offset: 0x16
+                entitlements_offset: 0x16
+                profiles_offset: 0x16
+                profiles_end_offset: 0x5a858
+                operation_nodes_offset: 0x5a858
+                operation_nodes_size: 0x4f0f8
+                base_adrr: 0xa9950
+
+
+
+================protobox ===========
+
+base address:
+342232, which is 
+
+
+profile_end_offset is 220052 which is 0x35b94
+
+self.profiles_end_offset = self.profiles_offset + (self.num_profiles * (self.sb_ops_count * INDEX_SIZE + PROFILE_OPS_OFFSET))
+
+220052 = 20 + (573 * (190 * 2 + 4))
+
+
+
+
+
+
+
+operation node offset 220056 (0x35b98)
+operation node size 122168 (0x1dd38)
+
+
+=================
+
+
+extract_string_from_offset(f, offset, base_addr)
+offset -> 1
+base_addr = 342224 (0x538d0)
+
+when i == 1:
+offset is 442
+
+
+====================================================================
+================== Collection ======================================
+====================================================================
+
+
+
+                struct_size: 0xe
+                header: 0x8000
+                op_nodes_count: 0xf4c7
+                sb_ops_count: 0xbe
+                vars_count: 0x16
+                states_count: 0x5
+                num_profiles: 0x110
+                re_table_count: 0xf4
+                entitlements_count: 0x6
+
+                regex_table_offset: 0xe
+                pattern_vars_offset: 0x1f6
+                states_offset: 0x222
+                entitlements_offset: 0x22c
+                profiles_offset: 0x238
+                profiles_end_offset: 0x19a38
+                operation_nodes_offset: 0x19a38
+                operation_nodes_size: 0x7a638
+                base_adrr: 0x94070
+
+
+base_address = 606320 (0x94070)
+
+
+
+
+
+
+
+
+

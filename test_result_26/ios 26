@@ -1,0 +1,74 @@
+ios 26
+
+Problem:
+
+extract_string_from_offset(f, offset, base_addr)
+
+offset -> 0
+base_address ->   698376 (0xaa808) 
+
+assuming when i == 1 offset should be:
+0xab4f8
+
+414
+
+
+====================================================================
+================== Collection ======================================
+====================================================================
+
+
+                struct_size: 0xe
+                header: 0x8000
+                op_nodes_count: 0x99e7
+                sb_ops_count: 0xc3
+                vars_count: 0x18
+                states_count: 0x6
+                num_profiles: 0x119
+                re_table_count: 0xf9
+                entitlements_count: 0x20
+
+                regex_table_offset: 0x10
+                pattern_vars_offset: 0x202
+                states_offset: 0x232
+                entitlements_offset: 0x23e
+                profiles_offset: 0x27e
+                profiles_end_offset: 0x1b75c
+                operation_nodes_offset: 0x1b760
+                operation_nodes_size: 0x4cf38
+                base_adrr: 0x68698
+
+
+  base address = 427672 (0x68698) 
+  should be (I think) 0x686d8
+
+
+
+operation_nodes_offset is  112480 ->  0x1b760
+but should really be   sub   0x01b7a8 (72 after)
+
+
+entitlements_offset = 574 (23e)
+entitlements_count = 32
+INDEX_SIZE = 2
+
+profiles_offset = 574 + 32 * 2 = 638
+
+
+self.profiles_end_offset = self.profiles_offset + (self.num_profiles * (self.sb_ops_count * INDEX_SIZE + profile_ops_offset_size))
+
+=====
+so the problem is this:
+574 + 32 * 2 + (281 * (195 * 2 + 8))
+
+
+
+
+
+
+I think state offsets should be 0x2b6
+
+
+
+
+

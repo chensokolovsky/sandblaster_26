@@ -1,0 +1,93 @@
+(version 1)
+(allow default)
+(deny file-ioctl
+	(require-all
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "t" 97)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 21)))))
+(deny generic-issue-extension)
+(deny iokit-issue-extension)
+(deny iokit-open-user-client
+	(require-all
+		(require-not (iokit-user-client-class "AppleMobileFileIntegrityUserClient"))
+		(require-not (iokit-user-client-class "IOHDIXControllerUserClient"))
+		(require-not (iokit-user-client-class "AppleKeyStoreUserClient"))
+		(require-not (iokit-user-client-class "AppleImage4UserClient"))))
+(deny iokit-open-service
+	(require-all
+		(require-not (iokit-user-client-class "IOHDIXController"))
+		(require-not (iokit-user-client-class "AppleMobileFileIntegrity"))
+		(require-not (iokit-user-client-class "AppleKeyStore"))
+		(require-not (iokit-user-client-class "AppleImage4"))))
+(deny iokit-set-properties)
+(deny ipc*)
+(deny ipc-posix*)
+(deny ipc-posix-sem*)
+(deny ipc-posix-sem-create)
+(deny ipc-posix-sem-open)
+(deny ipc-posix-sem-post)
+(deny ipc-posix-sem-unlink)
+(deny ipc-posix-sem-wait)
+(deny ipc-posix-shm*)
+(deny ipc-posix-shm-write*)
+(deny ipc-posix-shm-write-create)
+(deny ipc-posix-shm-write-data)
+(deny ipc-posix-shm-write-unlink)
+(deny ipc-sysv*)
+(deny ipc-sysv-msg)
+(deny ipc-sysv-sem)
+(deny ipc-sysv-shm)
+(deny job-creation)
+(deny mach-issue-extension)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.diagnosticd"))
+		(require-not (global-name "com.apple.logd.events"))
+		(require-not (global-name "com.apple.system.notification_center"))
+		(require-not (global-name "com.apple.diagd"))
+		(require-not (global-name "com.apple.nsurlsessiond.NSURLSessionProxyService"))
+		(require-not (global-name "com.apple.usymptomsd"))
+		(require-not (global-name "com.apple.trustd"))
+		(require-not (global-name "com.apple.ctkd.token-client"))
+		(require-not (global-name "com.apple.lsd.mapdb"))
+		(require-not (global-name "com.apple.remoted"))
+		(require-not (global-name "com.apple.logd"))
+		(require-not (xpc-service-name "com.apple.diskimagescontroller"))
+		(global-name "com.apple.cfprefsd.daemon")
+		(global-name "com.apple.containermanagerd.system")
+		(global-name "com.apple.cfprefsd.daemon.system")
+		(global-name "com.apple.analyticsd")
+		(global-name "com.apple.AppSSO.service-xpc")))
+(deny process-exec*)
+(deny process-exec-interpreter)
+(deny syscall-unix
+	(require-not (c1 4425 9e1d 665e)))
+(deny syscall-mach
+	(require-not (cb 442f 9e1d 665c)))
+(deny syscall-mig
+	(require-not (cc 4431 9e1d 665a)))
+(deny sysctl-write
+	(require-not (sysctl-name "security.mac.image4.nonce.copy_hash")))
+(deny system-fcntl
+	(require-not (ce 443d 9e1d 6657)))
+(deny system-fsctl
+	(require-not (fsctl-command-regex [UNSUPPORTED](_IO "J" 102))))
+(deny system-kas-info)
+(deny system-mac-syscall
+	(mac-syscall-number 105)
+	(mac-policy-name "AMFI")
+	(mac-syscall-number 90)
+	(require-all
+		(mac-policy-name "Sandbox")
+		(mac-syscall-number 67)
+		(mac-syscall-number 4)
+		(mac-syscall-number 2)))
+(deny system-necp-client-action
+	(require-all
+		(require-not (d3 079d 8ae1 9e1e))
+		(necp-client-action-regex [UNSUPPORTED])
+		(d3 019c 9db4 9e1e)
+		(necp-client-action-regex [UNSUPPORTED])
+		(d3 019d 9db6 9e1e)
+		(necp-client-action-regex [UNSUPPORTED])
+		(necp-client-action-regex [UNSUPPORTED])))
+(deny storage-class-map)

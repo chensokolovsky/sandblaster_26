@@ -1,0 +1,23 @@
+(version 1)
+(allow default)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.diagnosticd"))
+		(require-not (global-name "com.apple.system.notification_center"))
+		(require-not (global-name "com.apple.system.libinfo.muser"))
+		(require-not (global-name "com.apple.analyticsd"))
+		(require-not (global-name "com.apple.cfprefsd.daemon"))
+		(require-not (global-name "com.apple.logd.admin"))
+		(require-not (global-name "com.apple.logd"))
+		(require-not (global-name "com.apple.containermanagerd"))
+		(require-not (global-name "com.apple.containermanagerd.system"))
+		(require-not (global-name "com.apple.cfprefsd.daemon.system"))
+		(require-any
+			(xpc-service-name-regex #".+")
+			(require-all
+				(debug-mode)
+				(global-name "com.apple.dt.testmanagerd.uiprocess")))))
+(allow (with no-sandbox) process-exec*)
+(allow (with no-sandbox) process-exec-interpreter)
+(deny system-kas-info)
+(deny storage-class-map)

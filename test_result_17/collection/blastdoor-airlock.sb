@@ -1,0 +1,493 @@
+(version 1)
+(deny default)
+(deny (with no-report) dynamic-code-generation)
+(allow file-issue-extension
+	(require-all
+		(extension-class "com.apple.app-sandbox.read")
+		(require-any
+			(subpath "/System/Cryptexes")
+			(subpath "/private/preboot/Cryptexes"))))
+(allow file-lock)
+(allow file-map-executable
+	(subpath "/usr/lib")
+	(subpath "/System/Library")
+	(require-all
+		(require-not (subpath "/Developer/Library"))
+		(require-any
+			(subpath "/System/Cryptexes")
+			(subpath "/private/preboot/Cryptexes"))))
+(allow file-read*
+	(require-any (literal "/private/var/Managed Preferences/mobile/.GlobalPreferences_m.plist")
+(literal "/private/var/Managed Preferences/mobile/kCFPreferencesAnyApplication.plist")
+(literal "/private/var/Managed Preferences/mobile/com.apple.avfoundation.plist")
+(literal "/private/var/Managed Preferences/mobile/com.apple.corevideo.plist")
+(literal "/private/var/Managed Preferences/mobile/com.apple.coremedia.plist")
+(literal "/private/var/Managed Preferences/mobile/com.apple.coreaudio.plist")
+(literal "/private/var/Managed Preferences/mobile/")
+(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/kCFPreferencesAnyApplication.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/com.apple.avfoundation.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/com.apple.coremedia.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/com.apple.corevideo.plist")
+(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/com.apple.coreaudio.plist"))
+	(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/.GlobalPreferences_m.plist")
+	(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.mobilegestaltcache/Library/Caches/com.apple.MobileGestalt.plist")
+	(literal "/private/var/Managed Preferences/mobile/.GlobalPreferences.plist")
+	(literal-prefix "${FRONT_USER_HOME}/Library/Preferences/.GlobalPreferences.plist")
+	(require-all
+		(subpath "/private/var/tmp/com.apple.TelephonyUtilities/SharePlayActivityImages")
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
+	(require-all
+		(subpath "/private/var/tmp/com.apple.messages")
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
+	(require-all
+		(require-any (subpath "/private/var/tmp/com.apple.identityservicesd")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.identityservicesd"))
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
+	(require-all
+		(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/tmp/com[UNSUPPORTED]apple[UNSUPPORTED]MobileSMS/?")
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
+	(require-all
+		(subpath "/private/var/tmp/com.apple.imtransferagent")
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
+	(require-all
+		(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.messages")
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
+	(require-all
+		(require-not (literal "/private/var"))
+		(require-all (require-not (subpath "/AppleInternal/Library/VideoCodecs"))
+(require-not (subpath "/usr/standalone/firmware"))
+(require-not (subpath "/private/xarts"))
+(require-not (subpath "/private/var/wireless/baseband_data")))
+		(require-not (subpath "/private/var/hardware"))
+		(require-not (subpath "/private/var/MobileSoftwareUpdate"))
+		(require-not (literal "/dev"))
+		(require-any
+			(literal "/dev/null")
+			(literal "/private")
+			(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
+			(literal "/dev/urandom")
+			(literal "/private/etc/passwd")
+			(literal "/private/etc/services")
+			(require-any (literal "/private/etc/group")
+(literal "/private/etc/protocols"))
+			(subpath "/System/Cryptexes")
+			(literal "/dev/zero")
+			(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
+			(literal "/System")
+			(literal "/private/etc/hosts")
+			(subpath "/private/preboot/Cryptexes")
+			(literal "/dev/random")
+			(literal "/")
+			(literal "/private/etc/fstab")
+			(literal "/private/preboot")
+			(require-all
+				(file-mode #o0004)
+				(require-any
+					(subpath "/System")
+					(subpath "/usr/lib")
+					(subpath "/usr/share")
+					(subpath "/private/var/db/dyld")
+					(subpath "/private/var/db/timezone")))))
+	(require-all
+		(require-any (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.TelephonyUtilities/SharePlayActivityImages")
+(subpath-prefix "${HOME}/Media/PhotoData/UBF/scopes/syndication/originals")
+(subpath-prefix "${HOME}/Library/Photos/Libraries/Syndication.photoslibrary/scopes/syndication/originals"))
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
+	(require-all
+		(subpath-prefix "${HOME}/Library/SMS")
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
+	(require-all
+		(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.imtransferagent")
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read)))
+	(require-all
+		(literal "/private/var/")
+		(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/euser[0-9]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/[-0-9A-F]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS/" #"^/private/var/Users/[^/]+/Containers/Data/[^/]+/[^/]+/tmp/com.apple.MobileSMS$")
+		(require-any
+			(require-all
+				(require-all (require-not (subpath "/AppleInternal/Library/VideoCodecs"))
+(require-not (subpath "/usr/standalone/firmware"))
+(require-not (subpath "/private/xarts"))
+(require-not (subpath "/private/var/wireless/baseband_data")))
+				(require-not (subpath "/private/var/hardware"))
+				(require-not (subpath "/private/var/MobileSoftwareUpdate"))
+				(require-not (literal "/dev"))
+				(require-any
+					(literal "/dev/null")
+					(literal "/private")
+					(literal "/private/preboot/cryptex1/current/RestoreVersion.plist")
+					(literal "/dev/urandom")
+					(literal "/private/etc/passwd")
+					(literal "/private/etc/services")
+					(require-any (literal "/private/etc/group")
+(literal "/private/etc/protocols"))
+					(subpath "/System/Cryptexes")
+					(literal "/dev/zero")
+					(literal "/private/preboot/cryptex1/current/SystemVersion.plist")
+					(literal "/System")
+					(literal "/private/etc/hosts")
+					(subpath "/private/preboot/Cryptexes")
+					(literal "/dev/random")
+					(literal "/")
+					(literal "/private/etc/fstab")
+					(literal "/private/preboot")
+					(require-all
+						(file-mode #o0004)
+						(require-any
+							(subpath "/System")
+							(subpath "/usr/lib")
+							(subpath "/usr/share")
+							(subpath "/private/var/db/dyld")
+							(subpath "/private/var/db/timezone")))))
+			(require-all
+				(require-any (subpath-prefix "${HOME}")
+(subpath-prefix "${FRONT_USER_HOME}"))
+				(require-any
+					(extension com.apple.app-sandbox.read)
+					(extension com.apple.blastdoor.read)))))
+	(require-all
+		(debug-mode)
+		(subpath "/AppleInternal/Library/Messages/BlastDoorTestData")
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.blastdoor.read))))
+(allow file-read-metadata
+	(require-any (literal-prefix "${FRONT_USER_HOME}")
+(literal-prefix "${FRONT_USER_HOME}/Library/Preferences"))
+	(require-all
+		(require-not (subpath "/Library/Preferences"))
+		(require-not (literal "/private/var/run/syslog"))
+		(require-any
+			(require-any (literal "/etc")
+(literal "/var"))
+			(subpath "/private/var/db/timezone")
+			(literal "/tmp")
+			(literal "/private/etc/localtime"))))
+(allow file-test-existence)
+(allow file-write*
+	(require-all
+		(literal "/private/var/cores/")
+		(regex #"^/private/var/cores/.+[.]core$")
+		(process-attribute is-apple-signed-executable)))
+(allow file-write-data
+	(require-all
+		(require-not (literal "/dev/dtracehelper"))
+		(require-any
+			(literal "/dev/zero")
+			(literal "/dev/null"))))
+(allow iokit-get-properties
+	(require-all
+		(iokit-property "platform-name")
+		(iokit-user-client-class "IOPlatformExpertDevice"))
+	(require-all
+		(iokit-user-client-class "IOPlatformDevice")
+		(require-any
+			(require-any (iokit-property "product-description")
+(iokit-property "device-perf-memory-class")
+(iokit-property "compatible-device-fallback")
+(iokit-property "graphics-featureset-class")
+(iokit-property "graphics-featureset-fallbacks")
+(iokit-property "artwork-display-gamut")
+(iokit-property "artwork-dynamic-displaymode")
+(iokit-property "artwork-device-idiom")
+(iokit-property "artwork-device-subtype"))
+			(iokit-property "product-id")
+			(iokit-property "artwork-scale-factor")
+			(iokit-property "soc-generation")
+			(iokit-property "iommu-present")))
+	(require-all
+		(iokit-property "IOSurfaceAcceleratorCapabilitiesDict")
+		(iokit-user-client-class "AppleM2ScalerCSCDriver"))
+	(require-all
+		(iokit-user-client-class "AppleAVD")
+		(require-any
+			(iokit-property "AVCSupported")
+			(iokit-property "HEVCCanDecodeTileToCanvas"))))
+(deny (with no-report) iokit-open-user-client)
+(deny (with no-report) iokit-open-service)
+(allow ipc-posix-shm-read-data
+	(ipc-posix-name "apple.shm.notification_center"))
+(allow mach-bootstrap
+	(state-flag))
+(allow mach-derive-port)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
+	(global-name "com.apple.logd")
+	(global-name "com.apple.system.notification_center")
+	(require-all
+		(require-not (xpc-service-name-regex #".+"))
+		(require-not (global-name "com.apple.analyticsd"))
+		(require-not (global-name "com.apple.audio.AudioComponentRegistrar"))
+		(require-not (global-name "com.apple.audio.toolbox.reporting.service"))
+		(require-not (global-name "com.apple.CARenderServer"))
+		(require-not (global-name "com.apple.coremedia.mediaparserd.utilities"))
+		(require-not (global-name "com.apple.mobileassetd.v2"))
+		(require-not (global-name "com.apple.mobilegestalt.xpc"))
+		(require-not (global-name "com.apple.powerlog.plxpclogger.xpc"))
+		(global-name "com.apple.system.logger")))
+(allow network-outbound
+	(literal "/private/var/run/syslog"))
+(allow process-codesigning)
+(deny (with no-report) process-info-codesignature)
+(allow process-legacy-codesigning-entitlements-blob-get)
+(allow process-legacy-codesigning-entitlements-der-blob-get)
+(allow process-legacy-codesigning-status-get)
+(allow syscall-unix
+	(c1 3645 b476 b411)
+	(require-all
+		(require-not (syscall-number SYS_necp_open))
+		(require-not (syscall-number SYS_necp_client_action))
+		(require-any
+			(require-all
+				(syscall-number SYS_psynch_rw_upgrade)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_sigprocmask)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_sigsuspend_nocancel)
+				(state-flag))
+			(require-all
+				(syscall-number SYS___pthread_chdir)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_psynch_cvwait)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_memorystatus_available_memory)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_psynch_rw_yieldwrlock)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_ulock_wait)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_psynch_cvbroad)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_setattrlistat)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_psynch_cvsignal)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_abort_with_payload)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_bsdthread_ctl)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_psynch_rw_unlock2)
+				(state-flag))
+			(require-all
+				(syscall-number SYS___channel_open)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_pathconf)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_psynch_mutexdrop)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_mkdir)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_getgid)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_process_policy)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_ulock_wait2)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_fsetattrlist)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_faccessat)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_psynch_rw_longrdlock)
+				(state-flag))
+			(require-all
+				(syscall-number SYS___pthread_sigmask)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_statfs64)
+				(state-flag))
+			(require-all
+				(syscall-number SYS___semwait_signal_nocancel)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_bsdthread_terminate)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_getrusage)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_rmdir)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_pread)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_ulock_wake)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_getattrlistbulk)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_psynch_cvclrprepost)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_umask)
+				(state-flag))
+			(require-all
+				(syscall-number SYS___pthread_kill)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_os_fault_with_payload)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_bsdthread_create)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_psynch_mutexwait)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_getxattr)
+				(state-flag))
+			(require-all
+				(syscall-number SYS___pthread_fchdir)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_readlink)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_change_fdguard_np)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_psynch_rw_downgrade)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_listxattr)
+				(state-flag))
+			(require-all
+				(syscall-number SYS___disable_threadsignal)
+				(state-flag))
+			(require-all
+				(require-not (state-flag))
+				(require-any
+					(syscall-number SYS_map_with_linking_np)
+					(syscall-number SYS_sigaction)
+					(syscall-number SYS_openat)
+					(syscall-number SYS_fstatfs64)
+					(syscall-number SYS_getegid)
+					(syscall-number SYS_madvise)
+					(syscall-number SYS_kdebug_typefilter)
+					(syscall-number SYS_getpid)
+					(syscall-number SYS_workq_open)
+					(syscall-number SYS_fstatat)
+					(syscall-number SYS_kdebug_trace_string)
+					(syscall-number SYS_workq_kernreturn)
+					(syscall-number SYS_gettimeofday)
+					(syscall-number SYS_getrlimit)
+					(syscall-number SYS_stat64_extended)
+					(syscall-number SYS_socket)
+					(syscall-number SYS_gettid)
+					(syscall-number SYS_objc_bp_assist_cfg_np)
+					(syscall-number SYS_psynch_rw_wrlock)
+					(syscall-number SYS_getentropy)
+					(syscall-number SYS_fstat64)
+					(syscall-number SYS_getuid)
+					(syscall-number SYS_mmap)
+					(syscall-number SYS_psynch_rw_unlock)
+					(syscall-number SYS_lstat64)
+					(syscall-number SYS_open)
+					(syscall-number SYS_thread_selfid)
+					(syscall-number SYS_kdebug_trace64)
+					(syscall-number SYS_setrlimit)
+					(syscall-number 38)
+					(syscall-number SYS_psynch_rw_rdlock)
+					(syscall-number SYS_stat64)
+					(syscall-number SYS_read)
+					(syscall-number SYS_memorystatus_control)
+					(syscall-number SYS_getattrlist)
+					(syscall-number SYS_issetugid)
+					(syscall-number SYS_kevent_id)
+					(syscall-number SYS_getdirentries64)
+					(syscall-number SYS_geteuid)
+					(syscall-number SYS_fstatat64)
+					(syscall-number SYS_dup)
+					(syscall-number SYS_munmap)
+					(syscall-number SYS_fsgetpath)
+					(syscall-number SYS_shared_region_check_np)
+					(syscall-number SYS_lseek)
+					(syscall-number SYS___mac_syscall)
+					(syscall-number SYS_read_nocancel)
+					(syscall-number SYS_mprotect)
+					(syscall-number SYS_kevent_qos)
+					(syscall-number SYS_getfsstat))))))
+(allow syscall-mach
+	(cb 3652 b40f b408)
+	(machtrap-number MSC__kernelrpc_mach_port_extract_member_trap)
+	(machtrap-number MSC_pid_for_task)
+	(machtrap-number MSC_thread_self_trap)
+	(machtrap-number MSC_mach_voucher_extract_attr_recipe_trap)
+	(machtrap-number MSC__kernelrpc_mach_port_get_attributes_trap))
+(allow syscall-mig
+	(cc 3658 b406 b400)
+	(require-all
+		(require-not (kernel-mig-routine 136))
+		(require-not (kernel-mig-routine 135))
+		(kernel-mig-routine 325)
+		(require-not (state-flag))))
+(allow sysctl-read
+	(require-any (sysctl-name "hw.model")
+(sysctl-name "hw.logicalcpu_max")
+(sysctl-name "hw.physicalcpu_max"))
+	(sysctl-name "kern.osversion")
+	(require-any (sysctl-name "hw.activecpu")
+(sysctl-name "hw.pagesize_compat"))
+	(sysctl-name "kern.maxfilesperproc")
+	(sysctl-name "kern.secure_kernel")
+	(require-any (sysctl-name "hw.cpufamily")
+(sysctl-name "hw.logicalcpu")
+(sysctl-name "hw.nperflevels"))
+	(sysctl-name "hw.physicalcpu")
+	(sysctl-name "hw.optional.neon_fp16")
+	(sysctl-name "vm.malloc_ranges")
+	(require-any (sysctl-name "hw.perflevel")
+(sysctl-name "kern.hv_vmm_present"))
+	(require-any (sysctl-name "kern.osvariant_status")
+(sysctl-name "kern.osproductversion"))
+	(sysctl-name "security.mac.lockdown_mode_state")
+	(require-any (sysctl-name "hw.memsize")
+(sysctl-name "hw.machine"))
+	(sysctl-name "hw.cachelinesize"))
+(allow system-fcntl
+	(ce 3668 b3f0 f4c6))
+(allow system-mac-syscall)
+(allow system-memorystatus-control
+	(memorystatus-control-command MEMORYSTATUS_CMD_INCREASE_JETSAM_TASK_LIMIT))
+(allow system-privilege
+	(privilege-id "PRIV_GLOBAL_PROC_INFO"))
+(allow process-exec-update-label)
