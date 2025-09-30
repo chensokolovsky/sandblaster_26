@@ -1,0 +1,9 @@
+(version 1)
+(allow default)
+(deny file-write-setugid)
+(deny network*
+	(local ip "*:*"))
+(deny network-outbound
+	(require-not (control-name "com.apple.flow-divert")))
+(deny system-kas-info)
+(deny storage-class-map)

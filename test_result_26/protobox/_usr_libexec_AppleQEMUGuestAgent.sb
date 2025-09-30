@@ -1,0 +1,56 @@
+(version 1)
+(allow default)
+(deny file-ioctl
+	(require-all
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "t" 103)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "t" 22)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "t" 97)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "t" 82)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "t" 84)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "t" 83)))))
+(deny generic-issue-extension)
+(deny iokit-issue-extension)
+(deny iokit-open-service)
+(deny iokit-set-properties)
+(deny ipc*)
+(deny ipc-posix*)
+(deny ipc-posix-sem*)
+(deny ipc-posix-sem-create)
+(deny ipc-posix-sem-open)
+(deny ipc-posix-sem-post)
+(deny ipc-posix-sem-unlink)
+(deny ipc-posix-sem-wait)
+(deny ipc-posix-shm*)
+(deny ipc-posix-shm-write*)
+(deny ipc-posix-shm-write-create)
+(deny ipc-posix-shm-write-data)
+(deny ipc-posix-shm-write-unlink)
+(deny ipc-sysv*)
+(deny ipc-sysv-msg)
+(deny ipc-sysv-sem)
+(deny ipc-sysv-shm)
+(deny job-creation)
+(deny mach-issue-extension)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.system.notification_center"))
+		(require-not (global-name "com.apple.diagnosticd"))
+		(require-not (global-name "com.apple.logd"))))
+(deny process-exec*
+	(require-all
+		(require-not (literal "/bin/chmod"))
+		(require-not (literal "/bin/zsh"))
+		(require-not (literal "/bin/bash"))))
+(deny socket-ioctl
+	(require-not (ioctl-command-regex [UNSUPPORTED](_IO "t" 97))))
+(deny syscall-unix
+	(require-not (c1 15b3 9e1d 9212)))
+(deny syscall-mach
+	(require-not (cb 15bd 9e1d 9210)))
+(deny syscall-mig
+	(require-not (cc 15bf 9e1d 920e)))
+(deny system-fcntl
+	(require-not (ce 0d6d 9e1d 920c)))
+(deny system-kas-info)
+(deny system-necp-client-action)
+(deny storage-class-map)
