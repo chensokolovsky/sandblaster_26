@@ -67,6 +67,11 @@ class SandboxData():
         profile_ops_offset_size = PROFILE_OPS_OFFSET
         if release == 26:
             profile_ops_offset_size = 8
+        
+        ### another patch
+        if release == 26:
+            if entitlements_count > 0:
+                self.profiles_offset += 72
         self.profiles_end_offset = self.profiles_offset + (self.num_profiles * (self.sb_ops_count * INDEX_SIZE + profile_ops_offset_size))
         self.operation_nodes_size = self.op_nodes_count * OPERATION_NODE_SIZE
         self.operation_nodes_offset = self.profiles_end_offset
@@ -77,8 +82,9 @@ class SandboxData():
         align_delta = self.operation_nodes_offset & 7
         if align_delta != 0:
             self.operation_nodes_offset += 8 - align_delta
-
+        
         self.base_addr = self.operation_nodes_offset + self.operation_nodes_size
+
 
         # data
         self.regex_list = None
@@ -290,6 +296,8 @@ def display_sandbox_profiles(infile, profiles_offset, num_profiles, base_addr):
 def get_global_vars(f, vars_offset, num_vars, base_address):
     global_vars = []
 
+    #vars_offset += 72
+
     next_var_pointer = vars_offset
     for i in range(0, num_vars):
         f.seek(next_var_pointer)
@@ -335,8 +343,13 @@ def parse_regex_list(infile, sandbox_data):
         infile.seek(sandbox_data.regex_table_offset)
         re_offsets_table = struct.unpack("<%dH" % sandbox_data.regex_count, infile.read(2 * sandbox_data.regex_count))
 
+        offset_addition = 0
+        ## Patch for collection
+        #if sandbox_data.release == 26:
+        #    offset_addition += 72
+        
         for offset in re_offsets_table:
-            infile.seek(offset * 8 + sandbox_data.base_addr)
+            infile.seek(offset * 8 + sandbox_data.base_addr + offset_addition)
             re_length = struct.unpack("<H", infile.read(2))[0]
             re = struct.unpack("<%dB" % re_length, infile.read(re_length))
             re_debug_str = "re: [", ", ".join([hex(i) for i in re]), "]"

@@ -1,0 +1,91 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all (require-not (subpath "/private/var/tmp/com.apple.avatarsd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.avatarsd"))))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))))
+(deny file-write*
+	(require-any (subpath "/private/var/tmp/com.apple.avatarsd")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.avatarsd")))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny iokit-open-user-client
+	(require-all
+		(require-not (iokit-user-client-class "AGXCommandQueue"))
+		(require-not (iokit-user-client-class "AGXDevice"))
+		(require-not (extension com.apple.security.exception.iokit-user-client-class))
+		(iokit-user-client-class "IOGPUDeviceUserClient")
+		(require-any (iokit-user-client-class "IOAccelDevice2")
+(iokit-user-client-class "IOAccelContext2")
+(iokit-user-client-class "IOAccelSharedUserClient2"))
+		(require-any (iokit-user-client-class "IOAccelDevice")
+(iokit-user-client-class "IOAccelContext")
+(iokit-user-client-class "IOAccelSubmitter2")
+(iokit-user-client-class "IOAccelSharedUserClient"))
+		(iokit-user-client-class "AGXSharedUserClient")
+		(require-any (iokit-connection "IOGPU")
+(iokit-connection "IOGraphicsAccelerator2"))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.apsd"))
+		(require-all (require-not (global-name "com.apple.cvmsServ"))
+(require-not (global-name "com.apple.gpumemd.source")))
+		(require-not (global-name "com.apple.coredatad.cloudkit"))
+		(require-not (xpc-service-name "com.apple.AGXCompilerService"))
+		(require-not (xpc-service-name "com.apple.MTLCompilerService"))
+		(require-not (extension com.apple.security.exception.mach-lookup.global-name))
+		(require-not (extension com.apple.security.exception.mach-lookup.local-name))
+		(require-any
+			(require-all
+				(global-name "com.apple.ckdiscretionaryd.debug")
+				(require-any
+					(xpc-service-name-regex #".+")
+					(xpc-service-name "com.apple.WebKit.")
+					(xpc-service-name "com.apple.CoreGraphics.CGPDFService")))
+			(require-all
+				(require-any (global-name "com.apple.cloudd.debug")
+(global-name "com.apple.cloudkit.partlycloudd.debug"))
+				(require-any
+					(xpc-service-name-regex #".+")
+					(xpc-service-name "com.apple.WebKit.")
+					(xpc-service-name "com.apple.CoreGraphics.CGPDFService")))
+			(require-all
+				(global-name "com.apple.cloudkit.partlycloudd")
+				(require-any
+					(xpc-service-name-regex #".+")
+					(xpc-service-name "com.apple.WebKit.")
+					(xpc-service-name "com.apple.CoreGraphics.CGPDFService")))
+			(require-all
+				(require-not (global-name "com.apple.cloudasset.cloudd"))
+				(require-not (global-name "com.apple.ckdiscretionaryd"))
+				(require-not (global-name "com.apple.cloudd"))
+				(require-any
+					(require-all
+						(global-name "com.apple.system.notification_center")
+						(entitlement-is-bool-true com.apple.security.on-demand-install-capable)
+						(xpc-service-name-regex #".+"))
+					(require-all
+						(global-name "com.apple.lsd.openurl")
+						(global-name "com.apple.tccd")
+						(global-name "com.apple.lsd.advertisingidentifiers")
+						(xpc-service-name-regex #".+")))))))
+(deny syscall-unix
+	(c1 29e1 74f0 9ce0))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-all
+		(require-not (preference-domain "com.apple.Metal"))
+		(require-not (preference-domain "com.apple.animoji"))
+		(require-not (preference-domain "com.apple.opengl"))
+		(preference-domain "com.apple.CloudKit")))
+(deny user-preference-write
+	(preference-domain "com.apple.animoji"))
+(deny storage-class-map)

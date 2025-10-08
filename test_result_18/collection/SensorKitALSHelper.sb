@@ -1,0 +1,73 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-all (require-not (subpath "/AppleInternal/Applications"))
+(require-not (subpath "/System/Developer/Applications"))
+(require-not (subpath "/private/var/personalized_debug/Applications"))
+(require-not (subpath "/private/var/personalized_automation/Applications"))
+(require-not (regex #"/private/var/personalized_factory/[UNSUPPORTED]+/Applications/?"))
+(require-not (regex #"/private/var/factory_mount/[UNSUPPORTED]+/Applications/?")))
+		(require-not (subpath "/private/var/containers/Bundle"))
+		(require-not (subpath "/Developer/Applications"))
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/Containers/Bundle"))
+		(require-any
+			(require-all
+				(literal "/System/Library/Carrier Bundles/")
+				(require-not (regex #"^/System/Library/Carrier Bundles//carrier[.]plist$" #"^/System/Library/Carrier Bundles/.+/carrier[.]plist$")))
+			(require-all
+				(require-not (subpath "/Applications"))
+				(require-not (subpath-prefix "${FRONT_USER_HOME}/Library/Carrier Bundles/Overlay"))
+				(require-any
+					(require-all
+						(literal "/private/var/")
+						(regex #"^/private/var/mobile/Library/Carrier Bundles//carrier[.]plist$" #"^/private/var/mobile/Library/Carrier Bundles/.+/carrier[.]plist$" #"^/private/var/euser[0-9]+/Library/Carrier Bundles/.*/carrier[.]plist$" #"^/private/var/[-0-9A-F]+/Library/Carrier Bundles/.*/carrier[.]plist$" #"^/private/var/Users/[^/]+/Library/Carrier Bundles/.*/carrier[.]plist$")
+						(require-not (subpath-prefix "${FRONT_USER_HOME}"))
+						(literal "/System/Library/Carrier Bundles/")
+						(require-not (regex #"^/System/Library/Carrier Bundles/[.]png$" #"^/System/Library/Carrier Bundles/.+[.]png$")))
+					(require-all
+						(require-not (literal-prefix "${FRONT_USER_HOME}/Library/Preferences/com.apple.carrier.plist"))
+						(require-any
+							(require-all
+								(literal "/System/Library/Carrier Bundles/")
+								(require-not (regex #"^/System/Library/Carrier Bundles/[.]png$" #"^/System/Library/Carrier Bundles/.+[.]png$")))
+							(require-all
+								(literal "/private/var/")
+								(require-any
+									(extension com.apple.app-sandbox.read)
+									(extension com.apple.app-sandbox.read-write)
+									(extension com.apple.security.exception.files.absolute-path.read-only)
+									(extension com.apple.security.exception.files.absolute-path.read-write)
+									(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+									(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches"))
+									(require-all
+										(regex #"^/private/var/mobile/Library/Carrier Bundles/[.]png$" #"^/private/var/mobile/Library/Carrier Bundles/.+[.]png$" #"^/private/var/euser[0-9]+/Library/Carrier Bundles/.*[.]png$" #"^/private/var/[-0-9A-F]+/Library/Carrier Bundles/.*[.]png$" #"^/private/var/Users/[^/]+/Library/Carrier Bundles/.*[.]png$")
+										(subpath-prefix "${FRONT_USER_HOME}")))))))))))
+(deny file-read-metadata
+	(require-all
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/Library/Carrier Bundles"))
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))))
+(deny file-write-setugid)
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.locationd.synchronous"))
+		(require-not (global-name "com.apple.routined.registration"))
+		(require-not (global-name "com.apple.locationd.registration"))
+		(require-not (global-name "com.apple.iohideventsystem"))
+		(require-not (global-name "com.apple.locationd.spi"))))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-all
+		(require-not (preference-domain "com.apple.SensorKitALSHelper"))
+		(require-not (preference-domain "com.apple.locationd"))
+		(require-not (preference-domain "com.apple.AppSupport"))
+		(require-not (preference-domain "com.apple.GEO"))
+		(preference-domain "com.apple.carrier")))
+(deny user-preference-write
+	(preference-domain "com.apple.SensorKitALSHelper"))
+(deny storage-class-map)

@@ -1,0 +1,129 @@
+(version 1)
+(deny default)
+(deny (with no-report) dynamic-code-generation)
+(allow file-lock)
+(allow file-read*
+	(literal "/private/var/preferences/Logging/com.apple.diagnosticd.filter.plist")
+	(require-all
+		(literal "/private/var")
+		(require-any (subpath "/AppleInternal/Library/VideoCodecs")
+(subpath "/usr/standalone/firmware")
+(subpath "/private/xarts")
+(subpath "/private/var/wireless/baseband_data"))
+		(subpath "/private/var/hardware")
+		(subpath "/private/var/MobileSoftwareUpdate")
+		(literal "/dev")
+		(require-any
+			(literal "/dev/null")
+			(literal "/private")
+			(require-any (literal "/private/preboot/cryptex1/current/SystemVersion.plist")
+(literal "/private/preboot/cryptex1/current/RestoreVersion.plist"))
+			(literal "/dev/urandom")
+			(literal "/private/etc/passwd")
+			(literal "/private/etc/services")
+			(require-any (literal "/private/etc/group")
+(literal "/private/etc/protocols"))
+			(literal "/private/etc/fstab")
+			(require-any (subpath "/private/preboot/Cryptexes")
+(subpath "/System/Cryptexes"))
+			(literal "/dev/zero")
+			(require-any (literal "/System")
+(literal "/private/preboot"))
+			(literal "/dev/random")
+			(literal "/private/etc/hosts")
+			(literal "/")
+			(require-all
+				(file-mode #o0004)
+				(require-any
+					(subpath "/private/var/db/timezone")
+					(subpath "/usr/share")
+					(subpath "/System")
+					(subpath "/usr/lib"))))))
+(allow file-read-metadata
+	(subpath "/Library/Preferences")
+	(require-all
+		(require-not (literal "/private/var/run/syslog"))
+		(require-any
+			(subpath "/private/var/db/timezone")
+			(literal "/tmp")
+			(literal "/private/etc/localtime")
+			(require-any (literal "/etc")
+(literal "/var")))))
+(allow file-test-existence)
+(deny (with no-report) iokit-get-properties)
+(deny (with no-report) iokit-open-user-client)
+(deny (with no-report) iokit-open-service)
+(allow(global-name "com.apple.iphone.axserver-systemwide") mach-bootstrap)
+(allow mach-kernel-endpoint)
+(allow mach-lookup
+	(global-name "com.apple.logd")
+	(global-name "com.apple.system.notification_center")
+	(require-all
+		(xpc-service-name-regex #".+")
+		(global-name "com.apple.powerlog.plxpclogger.xpc")
+		(global-name "com.apple.CARenderServer")
+		(global-name "com.apple.audio.AudioComponentRegistrar")
+		(global-name "com.apple.mobileassetd.v2")
+		(global-name "com.apple.coremedia.mediaparserd.utilities")
+		(global-name "com.apple.system.logger")
+		(global-name "com.apple.analyticsd")
+		(global-name "com.apple.mobilegestalt.xpc")))
+(allow mach-task-exception-port-set)
+(allow process-codesigning)
+(allow process-info-codesignature)
+(allow sandbox-check)
+(allow syscall-unix
+	(c1 395b 6fb8 6fa6)
+	(require-all
+		(require-not (syscall-number SYS_necp_open))
+		(require-not (syscall-number SYS_necp_client_action))
+		(require-any
+			(c1 3965 6fb7 6fa9)
+			(syscall-number SYS_openat)
+			(syscall-number SYS_fstatat)
+			(syscall-number SYS_getfsstat)
+			(syscall-number SYS_open)
+			(syscall-number 38)
+			(syscall-number SYS_memorystatus_control)
+			(syscall-number SYS_fstatat64)
+			(syscall-number SYS___mac_syscall)
+			(require-all
+				(c1 3972 6fb0 6faa)
+				(require-any
+					(c1 397c 9cdf 6fb1)
+					(state-flag)))
+			(require-all
+				(syscall-number SYS_sigaction)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_getpid)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_munmap)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_fsgetpath)
+				(state-flag))
+			(require-all
+				(syscall-number SYS_shared_region_check_np)
+				(state-flag))
+			(require-all
+				(c1 3986 6fb3 6ff3)
+				(require-any
+					(require-not (state-flag))
+					(syscall-number SYS_dup)
+					(syscall-number SYS_getfsstat64)
+					(syscall-number SYS_map_with_linking_np))))))
+(allow syscall-mach
+	(cb 398f 6fa4 6fa3)
+	(cb 3991 6fb7 6fe8))
+(allow syscall-mig
+	(cc 3993 6fa1 6fe1)
+	(require-all
+		(kernel-mig-routine 326)
+		(state-flag)))
+(allow sysctl-read)
+(allow system-fcntl
+	(ce 04cf 6f9f 9cde))
+(allow system-mac-syscall)
+(allow process-exec-update-label)

@@ -1,0 +1,82 @@
+(version 1)
+(allow default)
+(deny file-issue-extension
+	(require-all
+		(extension-class "com.apple.revisiond.staging")
+		(require-all (require-not (subpath "/private/var/.DocumentRevisions-V100"))
+(require-not (subpath "/private/var/.DocumentRevisions-V100-bad-"))
+(require-not (subpath-prefix "${ANY_USER_HOME}/.DocumentRevisions-V100"))
+(require-not (subpath-prefix "${ANY_USER_HOME}/.DocumentRevisions-V100-bad-")))
+		(literal "/private/var/PersonaVolumes/")
+		(require-not (regex #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100/" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100$" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100-bad-[0-9]+/" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100-bad-[0-9]+$")))
+	(require-all
+		(extension-class "com.apple.revisiond.revision")
+		(require-all (require-not (subpath "/private/var/.DocumentRevisions-V100"))
+(require-not (subpath "/private/var/.DocumentRevisions-V100-bad-"))
+(require-not (subpath-prefix "${ANY_USER_HOME}/.DocumentRevisions-V100"))
+(require-not (subpath-prefix "${ANY_USER_HOME}/.DocumentRevisions-V100-bad-")))
+		(literal "/private/var/PersonaVolumes/")
+		(require-not (regex #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100/" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100$" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100-bad-[0-9]+/" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100-bad-[0-9]+$"))))
+(deny file-read*
+	(require-not (literal "/dev/fsevents")))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))))
+(deny file-write*
+	(require-all
+		(require-not (subpath "/private/var/log/com.apple.revisiond"))
+		(require-all (require-not (subpath "/private/var/.DocumentRevisions-V100"))
+(require-not (subpath "/private/var/.DocumentRevisions-V100-bad-"))
+(require-not (subpath-prefix "${ANY_USER_HOME}/.DocumentRevisions-V100"))
+(require-not (subpath-prefix "${ANY_USER_HOME}/.DocumentRevisions-V100-bad-")))
+		(require-any
+			(require-all
+				(literal "/private/var/PersonaVolumes/")
+				(require-not (regex #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100/" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100$" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100-bad-[0-9]+/" #"^/private/var/PersonaVolumes/[^/]+/[.]DocumentRevisions-V100-bad-[0-9]+$"))
+				(subpath-prefix "${PROCESS_TEMP_DIR}"))
+			(require-all
+				(require-not (subpath "/private/var/tmp"))
+				(subpath-prefix "${PROCESS_TEMP_DIR}")))))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.revisiond"))
+		(require-not (global-name "com.apple.FSEvents"))
+		(require-not (global-name "com.apple.cache_delete"))
+		(require-not (global-name "com.apple.symptom_diagnostics"))
+		(require-not (global-name "com.apple.CoreServices.coreservicesd"))
+		(global-name "com.apple.iokit.powerdxpc")
+		(global-name "com.apple.PowerManagement.control")
+		(extension com.apple.security.exception.mach-lookup.global-name)
+		(extension com.apple.security.exception.mach-lookup.local-name)
+		(global-name "com.apple.powerlog.plxpclogger.xpc")
+		(require-any
+			(require-all
+				(global-name "com.apple.system.notification_center")
+				(entitlement-is-bool-true com.apple.security.on-demand-install-capable)
+				(require-any
+					(xpc-service-name-regex #".+")
+					(xpc-service-name "com.apple.WebKit.")
+					(xpc-service-name "com.apple.CoreGraphics.CGPDFService")))
+			(require-all
+				(global-name "com.apple.lsd.openurl")
+				(global-name "com.apple.tccd")
+				(global-name "com.apple.lsd.advertisingidentifiers")
+				(xpc-service-name-regex #".+")))))
+(deny system-fsctl
+	(require-all
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "h" 31)))
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "h" 24)))
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "h" 30)))
+		(fsctl-command-regex [UNSUPPORTED](_IO "h" 32))))
+(deny system-kas-info)
+(deny user-preference-read
+	(preference-domain "com.apple.revisiond"))
+(deny storage-class-map)

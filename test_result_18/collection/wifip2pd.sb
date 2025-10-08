@@ -1,0 +1,31 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-not (literal "/private/var/preferences/SystemConfiguration/com.apple.wifip2p")))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))))
+(deny file-write*
+	(literal "/private/var/preferences/SystemConfiguration/com.apple.wifip2p"))
+(deny file-write-create
+	(literal-prefix "${HOME}/Library/Logs/CrashReporter/CFNetwork_"))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny iokit-open-user-client
+	(require-all
+		(require-not (iokit-user-client-class "IOUserUserClient"))
+		(require-all (require-not (iokit-user-client-class "IO80211P2PDaemonUserClient"))
+(require-not (iokit-user-client-class "IO80211AsyncEventUserClient")))
+		(require-not (iokit-user-client-class "IO80211APIUserClient"))))
+(deny job-creation)
+(deny syscall-unix
+	(c1 1523 006e 9ce0))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-not (preference-domain "com.apple.settings.airport")))
+(deny storage-class-map)

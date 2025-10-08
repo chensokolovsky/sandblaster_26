@@ -1,0 +1,95 @@
+(version 1)
+(allow default)
+(deny file-issue-extension
+	(require-all
+		(subpath "/private/var/log/iolog_unsent")
+		(extension-class "com.apple.app-sandbox.read-write")
+		(extension-class "com.apple.app-sandbox.read")
+		(extension-class "com.apple.mediaserverd.read-write")
+		(extension-class "com.apple.aned.read-only")
+		(extension-class "com.apple.mediaserverd.read")))
+(deny file-read*
+	(require-all
+		(require-not (subpath "/private/var/log/iolog_unsent"))
+		(require-all (require-not (subpath "/private/var/db/NANDTelemetryServices"))
+(require-not (subpath "/private/var/tmp/com.apple.ASPCarryLog"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.ASPCarryLog")))
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.app-sandbox.read-write)
+			(extension com.apple.security.exception.files.absolute-path.read-only)
+			(extension com.apple.security.exception.files.absolute-path.read-write)
+			(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+			(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches"))
+			(require-all
+				(subpath "/AppleInternal")
+				(debug-mode))
+			(require-all
+				(subpath "/usr/local/lib")
+				(debug-mode))
+			(require-all
+				(entitlement-is-present com.apple.private.oop-jit.loader)
+				(extension com.apple.sandbox.oopjit)
+				(subpath "/private/var/OOPJit")))))
+(deny file-read-metadata
+	(require-all
+		(require-not (subpath "/private/var/log/iolog_unsent"))
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))
+		(require-any (subpath "/private/var/db/NANDTelemetryServices")
+(subpath "/private/var/tmp/com.apple.ASPCarryLog")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.ASPCarryLog"))
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.app-sandbox.read-write)
+			(extension com.apple.security.exception.files.absolute-path.read-only)
+			(extension com.apple.security.exception.files.absolute-path.read-write)
+			(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+			(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches"))
+			(require-all
+				(subpath "/AppleInternal")
+				(debug-mode))
+			(require-all
+				(subpath "/usr/local/lib")
+				(debug-mode))
+			(require-all
+				(entitlement-is-present com.apple.private.oop-jit.loader)
+				(extension com.apple.sandbox.oopjit)
+				(subpath "/private/var/OOPJit")))))
+(deny file-write*
+	(require-all
+		(require-not (subpath "/private/var/log/iolog_unsent"))
+		(require-any (subpath "/private/var/db/NANDTelemetryServices")
+(subpath "/private/var/tmp/com.apple.ASPCarryLog")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.ASPCarryLog"))))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny iokit-open-user-client
+	(require-not (iokit-user-client-class "AppleNVMeUpdateUC")))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.cache_delete"))
+		(require-not (global-name "com.apple.mobile.softwareupdated"))
+		(require-not (global-name "com.apple.cache_delete.public"))))
+(deny sysctl-read
+	(require-all
+		(require-not (sysctl-name "vm.pagesize"))
+		(require-any (sysctl-name "vm.compressor_")
+(sysctl-name "vm.native_hw_pagesize")
+(sysctl-name "kern.memorystatus_freeze_pageouts"))))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-any (preference-domain "com.apple.ASPCarryLog")
+(preference-domain "com.apple.nandCarryLogs")))
+(deny storage-class-map)

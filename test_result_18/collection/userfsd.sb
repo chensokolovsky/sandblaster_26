@@ -1,0 +1,81 @@
+(version 1)
+(allow default)
+(deny file-ioctl
+	(require-all
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 76)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 71)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 65)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 24)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 67)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 70)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 22)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 64)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 29)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 31)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 66)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 77)))
+		(require-not (ioctl-command-regex [UNSUPPORTED](_IO "d" 25)))
+		(ioctl-command-regex [UNSUPPORTED](_IO "d" 79))))
+(deny file-issue-extension
+	(require-all
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.filesystems.userfsd")
+		(extension-class "com.apple.app-sandbox.read-write")
+		(extension-class "com.apple.app-sandbox.read")
+		(extension-class "com.apple.mediaserverd.read-write")
+		(extension-class "com.apple.aned.read-only")
+		(extension-class "com.apple.mediaserverd.read")))
+(deny file-read*
+	(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.filesystems.userfsd"))
+	(require-all
+		(vnode-type REGULAR-FILE)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.filesystems.userfsd")))
+	(require-all
+		(vnode-type DIRECTORY)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.filesystems.userfsd"))))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}/Library/Caches"))
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.filesystems.userfsd"))))
+(deny file-write*
+	(subpath-prefix "${HOME}/Library/Caches/com.apple.filesystems.userfsd")
+	(require-all
+		(vnode-type REGULAR-FILE)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.filesystems.userfsd")))
+	(require-all
+		(vnode-type DIRECTORY)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.filesystems.userfsd"))))
+(deny file-write-create
+	(require-all
+		(vnode-type DIRECTORY)
+		(require-not (literal-prefix "${HOME}/Library/Caches"))
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.filesystems.userfsd")
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.filesystems.userfsd")))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.powerlog.plxpclogger.xpc"))
+		(require-not (global-name "com.apple.FileProvider"))
+		(require-not (global-name "com.apple.iokit.powerdxpc"))
+		(require-not (global-name "com.apple.PowerManagement.control"))
+		(require-all (require-not (global-name "com.apple.spotlight.userfs"))
+(require-not (global-name "com.apple.filesystems.fskitd"))
+(require-not (global-name "com.apple.filesystems.userfs_helper")))))
+(deny process-exec*
+	(require-any (literal "/System/Library/PrivateFrameworks/UserFS.framework/userfsd")
+(literal "/System/Library/Filesystems/apfs.fs/fsck_apfs")
+(literal "/System/Library/Filesystems/exfat.fs/fsck_exfat")
+(literal "/System/Library/Filesystems/exfat.fs/Contents/Resources/fsck_exfat")
+(literal "/System/Library/Filesystems/hfs.fs/fsck_hfs")
+(literal "/System/Library/Filesystems/hfs.fs/Contents/Resources/fsck_hfs")
+(literal "/System/Library/Filesystems/msdos.fs/fsck_msdos")
+(literal "/System/Library/Filesystems/msdos.fs/Contents/Resources/fsck_msdos")))
+(deny sysctl-read
+	(sysctl-name "vm.memory_pressure"))
+(deny system-kas-info)
+(deny storage-class-map)

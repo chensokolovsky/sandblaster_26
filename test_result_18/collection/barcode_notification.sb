@@ -1,0 +1,73 @@
+(version 1)
+(allow default)
+(deny file-issue-extension
+	(require-all
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.BarcodeSupport.Notification")
+		(extension-class "com.apple.app-sandbox.read-write")
+		(extension-class "com.apple.app-sandbox.read")
+		(extension-class "com.apple.mediaserverd.read-write")
+		(extension-class "com.apple.aned.read-only")
+		(extension-class "com.apple.mediaserverd.read")))
+(deny file-read*
+	(require-all
+		(vnode-type REGULAR-FILE)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.BarcodeSupport.Notification")))
+	(require-all
+		(vnode-type DIRECTORY)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.BarcodeSupport.Notification")))
+	(require-all
+		(require-not (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/EffectiveUserSettings.plist"))
+		(require-not (subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.lsd.iconscache"))
+		(require-not (literal-prefix "${FRONT_USER_HOME}/Library/ConfigurationProfiles/EffectiveUserSettings.plist"))
+		(require-not (subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.nsurlstoragedresources/Library/dafsaData.bin"))
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.BarcodeSupport.Notification"))
+		(require-all (require-not (subpath "/private/var/tmp/com.apple.BarcodeSupport.Notification"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.BarcodeSupport.Notification")))
+		(require-not (literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/EffectiveUserSettings.plist"))))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.BarcodeSupport.Notification"))
+		(require-not (literal-prefix "${HOME}/Library/Caches"))))
+(deny file-write*
+	(require-all
+		(vnode-type REGULAR-FILE)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.BarcodeSupport.Notification")))
+	(require-all
+		(vnode-type DIRECTORY)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.BarcodeSupport.Notification")))
+	(require-all
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.BarcodeSupport.Notification"))
+		(require-any (subpath "/private/var/tmp/com.apple.BarcodeSupport.Notification")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.BarcodeSupport.Notification"))))
+(deny file-write-create
+	(require-all
+		(vnode-type DIRECTORY)
+		(require-not (literal-prefix "${HOME}/Library/Caches"))
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.BarcodeSupport.Notification")
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.BarcodeSupport.Notification")
+		(require-any (subpath "/private/var/tmp/com.apple.BarcodeSupport.Notification")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.BarcodeSupport.Notification"))))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.contactsd"))
+		(require-not (global-name "com.apple.calaccessd"))
+		(require-not (global-name "com.apple.awdd"))
+		(require-not (global-name "com.apple.telephonyutilities.callservicesdaemon.callcapabilities"))
+		(require-not (global-name "com.apple.usernotifications.remotenotificationservice"))
+		(require-not (global-name "com.apple.springboard.backgroundappservices"))
+		(require-not (global-name "com.apple.springboard.services"))
+		(require-not (global-name "com.apple.usernotifications.usernotificationservice"))
+		(require-not (global-name "com.apple.usernotifications.listener"))))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-not (preference-domain "com.apple.UIKit")))
+(deny storage-class-map)

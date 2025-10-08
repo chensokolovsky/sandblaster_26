@@ -1,0 +1,29 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-not (subpath "/private/var/tmp"))
+		(require-not (subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.installcoordinationd/Library/InstallCoordination/PromiseStaging"))
+		(require-not (subpath-prefix "${PROCESS_TEMP_DIR}"))
+		(require-not (extension com.apple.StreamingUnzipService))))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))))
+(deny file-write*
+	(require-all
+		(require-not (subpath "/private/var/tmp"))
+		(require-not (subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.installcoordinationd/Library/InstallCoordination/PromiseStaging"))
+		(require-not (subpath-prefix "${PROCESS_TEMP_DIR}"))
+		(extension com.apple.StreamingUnzipService)))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny system-kas-info)
+(deny user-preference-read
+	(preference-domain "com.apple.StreamingUnzipService"))
+(deny storage-class-map)

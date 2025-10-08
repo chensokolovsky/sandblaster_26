@@ -1,0 +1,84 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-not (literal "/private/var/preferences/com.apple.networkd.plist"))
+		(require-not (subpath "/private/var/containers/Bundle"))
+		(require-not (literal "/private/var/Managed Preferences/mobile/com.apple.SystemConfiguration.plist"))
+		(require-all (require-not (subpath "/AppleInternal/Applications"))
+(require-not (subpath "/System/Developer/Applications"))
+(require-not (subpath "/private/var/personalized_debug/Applications"))
+(require-not (subpath "/private/var/personalized_automation/Applications"))
+(require-not (regex #"/private/var/personalized_factory/[UNSUPPORTED]+/Applications/?"))
+(require-not (regex #"/private/var/factory_mount/[UNSUPPORTED]+/Applications/?")))
+		(require-not (subpath "/Developer/Applications"))
+		(require-not (literal "/private/var/preferences/com.apple.security.plist"))
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/Containers/Bundle"))
+		(require-not (subpath-prefix "${PROCESS_TEMP_DIR}"))
+		(require-not (literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.nsurlstoragedresources/Library/dafsaData.bin"))
+		(require-not (literal "/private/var/db/com.apple.networkextension.tracker-info"))
+		(require-not (subpath "/Applications"))
+		(require-not (subpath "/private/var/tmp"))
+		(require-not (subpath "/private/var/MobileDevice"))
+		(require-not (subpath "/private/var/db/MobileIdentityData"))
+		(require-not (literal "/private/var/preferences/com.apple.NetworkStatistics.plist"))
+		(require-any
+			(require-all
+				(process-attribute is-apple-signed-executable)
+				(literal "/private/var/preferences/com.apple.networkextension.uuidcache.plist"))
+			(require-all
+				(literal "/private/var/preferences/com.apple.networkextension.plist")
+				(entitlement-is-present com.apple.private.networkextension.configuration)
+				(require-any
+					(extension com.apple.app-sandbox.read)
+					(extension com.apple.app-sandbox.read-write)
+					(extension com.apple.security.exception.files.absolute-path.read-only)
+					(extension com.apple.security.exception.files.absolute-path.read-write)
+					(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+					(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches")))))))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))))
+(deny file-write*
+	(require-all
+		(require-not (subpath "/private/var/tmp"))
+		(require-not (subpath "/private/var/db/MobileIdentityData"))
+		(require-not (subpath "/private/var/MobileDevice"))
+		(subpath-prefix "${PROCESS_TEMP_DIR}")))
+(deny file-write-create
+	(literal-prefix "${HOME}/Library/Logs/CrashReporter/CFNetwork_"))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny iokit-open-user-client
+	(require-all
+		(require-not (iokit-user-client-class "IOAESAcceleratorUserClient"))
+		(require-not (iokit-user-client-class "AppleMobileFileIntegrityUserClient"))
+		(require-not (iokit-user-client-class "AppleKeyStoreUserClient"))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.online-auth-agent.xpc"))
+		(require-not (global-name "com.apple.misagent"))
+		(require-not (global-name "com.apple.mobileactivationd"))))
+(deny network-outbound
+	(require-all
+		(require-not (control-name "com.apple.flow-divert"))
+		(require-not (remote ip "*:*"))
+		(remote udp "*:443")
+		(control-name "com.apple.netsrc")
+		(control-name "com.apple.network.statistics")
+		(literal "/private/var/run/mDNSResponder")))
+(deny syscall-unix
+	(c1 1523 2b51 9ce0))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-not (preference-domain "com.apple.mis")))
+(deny storage-class-map)

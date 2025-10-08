@@ -1,0 +1,81 @@
+(version 1)
+(allow default)
+(deny file-ioctl
+	(literal "/dev/disk"))
+(deny file-mount
+	(require-all
+		(require-not (subpath "/Developer"))
+		(require-not (subpath "/System/Developer"))
+		(require-all (require-not (subpath "/private/var/mnt"))
+(require-not (subpath "/private/var/personalized_quality"))
+(require-not (subpath "/private/var/personalized_repair"))
+(require-not (subpath "/private/var/cryptex_smartforwarder")))
+		(require-all (require-not (subpath "/private/var/factory_mount"))
+(require-not (subpath "/private/var/personalized_automation"))
+(require-not (subpath "/private/var/personalized_demo"))
+(require-not (subpath "/private/var/personalized_debug")))
+		(subpath "/private/var/personalized_factory")))
+(deny file-read*
+	(require-all
+		(require-not (literal "/private/var/preferences/com.apple.networkd.plist"))
+		(require-not (subpath "/Developer"))
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/RepairDiskImage"))
+		(require-all (require-not (subpath "/private/var/factory_mount"))
+(require-not (subpath "/private/var/personalized_automation"))
+(require-not (subpath "/private/var/personalized_demo"))
+(require-not (subpath "/private/var/personalized_debug")))
+		(require-not (subpath "/System/Developer"))
+		(require-all (require-not (subpath "/private/var/mnt"))
+(require-not (subpath "/private/var/personalized_quality"))
+(require-not (subpath "/private/var/personalized_repair"))
+(require-not (subpath "/private/var/cryptex_smartforwarder")))
+		(require-not (literal "/private/etc/master.passwd"))
+		(require-not (subpath "/dev"))
+		(require-not (subpath "/private/var/personalized_factory"))
+		(require-not (subpath "/private/var/run/mobile_image_mounter"))))
+(deny file-write*
+	(require-all
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/RepairDiskImage"))
+		(require-not (subpath "/private/var/run/mobile_image_mounter"))))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny iokit-open-user-client
+	(require-all
+		(require-not (iokit-user-client-class "AppleMobileApNonceUserClient"))
+		(require-not (iokit-user-client-class "AppleMobileFileIntegrityUserClient"))
+		(require-not (iokit-user-client-class "IOHDIXControllerUserClient"))))
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.securityd"))
+		(require-not (global-name "com.apple.SBUserNotification"))
+		(require-not (global-name "com.apple.security.cryptexd"))
+		(require-not (global-name "com.apple.filesystems.localLiveFiles"))
+		(require-not (global-name "com.apple.installcoordinationd"))
+		(extension com.apple.security.exception.mach-lookup.global-name)
+		(extension com.apple.security.exception.mach-lookup.local-name)
+		(global-name "com.apple.trustd")
+		(require-any
+			(require-all
+				(global-name "com.apple.system.notification_center")
+				(entitlement-is-bool-true com.apple.security.on-demand-install-capable)
+				(require-any
+					(xpc-service-name-regex #".+")
+					(xpc-service-name "com.apple.WebKit.")
+					(xpc-service-name "com.apple.CoreGraphics.CGPDFService")))
+			(require-all
+				(global-name "com.apple.lsd.openurl")
+				(global-name "com.apple.tccd")
+				(global-name "com.apple.lsd.advertisingidentifiers")
+				(xpc-service-name-regex #".+")))))
+(deny sysctl-read
+	(require-all
+		(require-not (sysctl-name "kern.osreleasetype"))
+		(sysctl-name "security.codesigning.config")))
+(deny system-fsctl
+	(fsctl-command-regex [UNSUPPORTED](_IO "A" 1)))
+(deny system-kas-info)
+(deny storage-class-map)

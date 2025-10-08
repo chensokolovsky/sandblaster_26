@@ -1,0 +1,8 @@
+(version 1)
+(allow default)
+(deny file-write-setugid)
+(deny job-creation)
+(deny system-kas-info)
+(deny user-preference-read
+	(preference-domain "com.apple.FontServices.FontProviderLoader"))
+(deny storage-class-map)

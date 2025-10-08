@@ -1,0 +1,118 @@
+(version 1)
+(allow default)
+(deny file-issue-extension
+	(require-all
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.mediaartworkd")
+		(extension-class "com.apple.app-sandbox.read-write")
+		(extension-class "com.apple.app-sandbox.read")
+		(extension-class "com.apple.mediaserverd.read-write")
+		(extension-class "com.apple.aned.read-only")
+		(extension-class "com.apple.mediaserverd.read")))
+(deny file-read*
+	(require-all
+		(require-not (literal "/private/var/preferences/com.apple.networkd.plist"))
+		(require-all (require-not (subpath-prefix "${HOME}/Media/Airlock/Media"))
+(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.itunescloudd/ArtworkDownloads")))
+		(require-any
+			(require-all
+				(literal "/private/var/")
+				(regex #"^/private/var/mobile/Media/iTunes_Control/iTunes" #"^/private/var/mobile/Media/[^/]+/iTunes_Control/iTunes" #"^/private/var/euser[0-9]+/Media/([^/]+/)?iTunes_Control/iTunes" #"^/private/var/[-0-9A-F]+/Media/([^/]+/)?iTunes_Control/iTunes" #"^/private/var/Users/[^/]+/Media/([^/]+/)?iTunes_Control/iTunes")
+				(subpath-prefix "${HOME}")
+				(require-any
+					(extension com.apple.app-sandbox.read)
+					(extension com.apple.app-sandbox.read-write)
+					(extension com.apple.security.exception.files.absolute-path.read-only)
+					(extension com.apple.security.exception.files.absolute-path.read-write)
+					(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+					(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches"))))
+			(require-all
+				(vnode-type REGULAR-FILE)
+				(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.mediaartworkd")))
+			(require-all
+				(vnode-type DIRECTORY)
+				(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.mediaartworkd")))
+			(require-all
+				(require-not (subpath-prefix "${HOME}/Library/Fonts"))
+				(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.mediaartworkd"))))))
+(deny file-read-metadata
+	(require-all
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.mediaartworkd"))
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Caches"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))))
+(deny file-write*
+	(require-all
+		(vnode-type REGULAR-FILE)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.mediaartworkd")))
+	(require-all
+		(vnode-type DIRECTORY)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.mediaartworkd")))
+	(require-all
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.mediaartworkd"))
+		(require-all (require-not (subpath-prefix "${HOME}/Media/Airlock/Media"))
+(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.itunescloudd/ArtworkDownloads")))
+		(literal "/private/var/")
+		(regex #"^/private/var/mobile/Media/iTunes_Control/iTunes" #"^/private/var/mobile/Media/[^/]+/iTunes_Control/iTunes" #"^/private/var/euser[0-9]+/Media/([^/]+/)?iTunes_Control/iTunes" #"^/private/var/[-0-9A-F]+/Media/([^/]+/)?iTunes_Control/iTunes" #"^/private/var/Users/[^/]+/Media/([^/]+/)?iTunes_Control/iTunes")
+		(subpath-prefix "${HOME}")))
+(deny file-write-create
+	(require-all
+		(vnode-type DIRECTORY)
+		(require-not (literal-prefix "${HOME}/Library/Caches"))
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.mediaartworkd")
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.mediaartworkd")
+		(require-any (subpath-prefix "${HOME}/Media/Airlock/Media")
+(subpath-prefix "${HOME}/Library/Caches/com.apple.itunescloudd/ArtworkDownloads"))
+		(literal "/private/var/")
+		(regex #"^/private/var/mobile/Media/iTunes_Control/iTunes" #"^/private/var/mobile/Media/[^/]+/iTunes_Control/iTunes" #"^/private/var/euser[0-9]+/Media/([^/]+/)?iTunes_Control/iTunes" #"^/private/var/[-0-9A-F]+/Media/([^/]+/)?iTunes_Control/iTunes" #"^/private/var/Users/[^/]+/Media/([^/]+/)?iTunes_Control/iTunes")
+		(subpath-prefix "${HOME}")))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny iokit-open-user-client
+	(require-all
+		(iokit-user-client-class "AppleJPEGDriverUserClient")
+		(iokit-user-client-class "IOSurfaceAcceleratorClient")
+		(iokit-user-client-class "AGXDevice")
+		(iokit-user-client-class "IOSurfaceRootUserClient")
+		(iokit-user-client-class "IOMobileFramebufferUserClient")
+		(iokit-user-client-class "AGXCommandQueue")
+		(extension com.apple.security.exception.iokit-user-client-class)
+		(iokit-user-client-class "IOGPUDeviceUserClient")
+		(require-any (iokit-user-client-class "IOAccelDevice2")
+(iokit-user-client-class "IOAccelContext2")
+(iokit-user-client-class "IOAccelSharedUserClient2"))
+		(require-any (iokit-user-client-class "IOAccelDevice")
+(iokit-user-client-class "IOAccelContext")
+(iokit-user-client-class "IOAccelSubmitter2")
+(iokit-user-client-class "IOAccelSharedUserClient"))
+		(iokit-user-client-class "AGXSharedUserClient")
+		(require-any (iokit-connection "IOGPU")
+(iokit-connection "IOGraphicsAccelerator2"))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (xpc-service-name "com.apple.ImageIOXPCService"))
+		(require-any (global-name "com.apple.cvmsServ")
+(global-name "com.apple.gpumemd.source"))
+		(xpc-service-name "com.apple.AGXCompilerService")
+		(xpc-service-name "com.apple.MTLCompilerService")))
+(deny syscall-unix
+	(c1 29e1 368f 9ce0))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-all
+		(require-not (preference-domain "com.apple.Metal"))
+		(require-not (preference-domain "com.apple.iokit.IOMobileGraphicsFamily"))
+		(require-not (preference-domain "com.apple.coremedia"))
+		(require-not (preference-domain "com.apple.networkd"))
+		(require-not (preference-domain "com.apple.opengl"))
+		(preference-domain "com.apple.mediaartworkd")))
+(deny user-preference-write
+	(preference-domain "com.apple.mediaartworkd"))
+(deny storage-class-map)

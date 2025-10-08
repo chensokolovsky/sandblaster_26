@@ -1,0 +1,53 @@
+(version 1)
+(allow default)
+(deny file-issue-extension
+	(require-all
+		(subpath-prefix "${HOME}/Library/UserFonts")
+		(extension-class "com.apple.app-sandbox.read-write")
+		(extension-class "com.apple.app-sandbox.read")
+		(extension-class "com.apple.mediaserverd.read-write")
+		(extension-class "com.apple.aned.read-only")
+		(extension-class "com.apple.mediaserverd.read")))
+(deny file-read*
+	(require-all
+		(require-not (subpath-prefix "${HOME}/Library/UserFonts"))
+		(extension com.apple.assets.read)
+		(subpath "/private/var/MobileAsset")
+		(subpath-prefix "${HOME}/Library/Assets")))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (subpath-prefix "${HOME}/Library/UserFonts"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))
+		(extension com.apple.assets.read)
+		(subpath "/private/var/MobileAsset")
+		(subpath-prefix "${HOME}/Library/Assets")))
+(deny file-write*
+	(subpath-prefix "${HOME}/Library/UserFonts"))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.usernotifications.remotenotificationservice"))
+		(require-all (require-not (global-name "com.apple.FontServices.GSFontServices"))
+(require-not (global-name "com.apple.FontServices.UserFontManager")))
+		(require-not (global-name "com.apple.SBUserNotification"))
+		(require-not (global-name "com.apple.springboard.backgroundappservices"))
+		(require-not (global-name "com.apple.springboard.services"))
+		(require-not (global-name "com.apple.FSEvents"))
+		(require-not (global-name "com.apple.usernotifications.usernotificationservice"))
+		(require-not (global-name "com.apple.usernotifications.listener"))
+		(require-not (global-name "com.apple.frontboard.systemappservices"))))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-all
+		(require-not (preference-domain "com.apple.fontservicesd"))
+		(preference-domain "com.apple.MobileAsset")))
+(deny user-preference-write
+	(preference-domain "com.apple.fontservicesd"))
+(deny storage-class-map)

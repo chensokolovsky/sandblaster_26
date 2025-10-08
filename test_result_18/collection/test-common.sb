@@ -1,0 +1,6 @@
+(version 1)
+(allow default)
+(deny file-write-setugid)
+(deny job-creation)
+(deny system-kas-info)
+(deny storage-class-map)

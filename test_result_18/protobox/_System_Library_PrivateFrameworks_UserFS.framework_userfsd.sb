@@ -1,0 +1,13 @@
+(version 1)
+(allow default)
+(deny generic-issue-extension)
+(deny iokit-issue-extension)
+(deny iokit-set-properties)
+(deny job-creation)
+(deny mach-issue-extension)
+(deny mach-lookup
+	(require-not (xpc-service-name "com.apple.filesystems.lifs.userfsd.UVFSService")))
+(deny process-exec*)
+(deny process-exec-interpreter)
+(deny system-kas-info)
+(deny storage-class-map)

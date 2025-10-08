@@ -1,0 +1,56 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-all (require-not (subpath "/AppleInternal/Applications"))
+(require-not (subpath "/System/Developer/Applications"))
+(require-not (subpath "/private/var/personalized_debug/Applications"))
+(require-not (subpath "/private/var/personalized_automation/Applications"))
+(require-not (regex #"/private/var/personalized_factory/[UNSUPPORTED]+/Applications/?"))
+(require-not (regex #"/private/var/factory_mount/[UNSUPPORTED]+/Applications/?")))
+		(require-not (subpath "/private/var/containers/Bundle"))
+		(require-not (subpath "/Developer/Applications"))
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/Containers/Bundle"))
+		(require-all (require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.metrickitd"))
+(require-not (subpath "/private/var/tmp/com.apple.metrickitd"))
+(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Caches/MetricKit/?")))
+		(require-not (subpath "/Applications"))
+		(literal "/private/var/")
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.app-sandbox.read-write)
+			(extension com.apple.security.exception.files.absolute-path.read-only)
+			(extension com.apple.security.exception.files.absolute-path.read-write)
+			(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+			(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches"))
+			(require-all
+				(require-any (subpath-prefix "${HOME}")
+(subpath-prefix "${FRONT_USER_HOME}"))
+				(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches/MetricKit$" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches/MetricKit/" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches/MetricKit$" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches/MetricKit/" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches/MetricKit$" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches/MetricKit/" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches/MetricKit$" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches/MetricKit/" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches/MetricKit$" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches/MetricKit/"))))))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))))
+(deny file-write*
+	(require-all
+		(require-all (require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.metrickitd"))
+(require-not (subpath "/private/var/tmp/com.apple.metrickitd"))
+(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Caches/MetricKit/?")))
+		(literal "/private/var/")
+		(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches/MetricKit$" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches/MetricKit/" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches/MetricKit$" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches/MetricKit/" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches/MetricKit$" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches/MetricKit/" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches/MetricKit$" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches/MetricKit/" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches/MetricKit$" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches/MetricKit/")
+		(subpath-prefix "${FRONT_USER_HOME}")
+		(subpath-prefix "${HOME}")))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny system-kas-info)
+(deny user-preference-read
+	(preference-domain "com.apple.metrickitd"))
+(deny storage-class-map)

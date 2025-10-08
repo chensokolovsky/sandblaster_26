@@ -1,0 +1,26 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-all (require-not (literal-prefix "${HOME}/Library/Safari/History.db"))
+(require-not (literal-prefix "${HOME}/Library/Safari/History.db-wal"))
+(require-not (literal-prefix "${HOME}/Library/Safari/History.db-shm"))
+(require-not (literal-prefix "${HOME}/Library/Safari/History.db-journal")))
+		(require-not (literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.nsurlstoragedresources/Library/dafsaData.bin"))
+		(require-not (literal-prefix "${HOME}/Library/Safari"))))
+(deny file-write*
+	(require-all
+		(require-all (require-not (literal-prefix "${HOME}/Library/Safari/History.db"))
+(require-not (literal-prefix "${HOME}/Library/Safari/History.db-wal"))
+(require-not (literal-prefix "${HOME}/Library/Safari/History.db-shm"))
+(require-not (literal-prefix "${HOME}/Library/Safari/History.db-journal")))
+		(literal-prefix "${HOME}/Library/Safari")))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny system-kas-info)
+(deny storage-class-map)

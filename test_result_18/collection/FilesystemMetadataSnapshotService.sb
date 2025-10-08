@@ -1,0 +1,90 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-not (vnode-type DIRECTORY))
+		(require-all (require-not (subpath "/private/var/root/Library/Logs/FilesystemMetadataSnapshot"))
+(require-not (subpath "/private/var/tmp/com.apple.FilesystemMetadataSnapshotService"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.FilesystemMetadataSnapshotService")))
+		(require-any
+			(require-not (literal-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter"))
+			(require-all
+				(literal "/private/var/")
+				(regex #"^/private/var/mobile/Library/Logs/CrashReporter/FilesystemMeta" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/FilesystemMeta" #"^/private/var/mobile/Library/Logs/CrashReporter/[.]FilesystemMeta" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/[.]FilesystemMeta" #"^/private/var/euser[0-9]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])FilesystemMeta" #"^/private/var/[-0-9A-F]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])FilesystemMeta" #"^/private/var/Users/[^/]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])FilesystemMeta")
+				(require-not (subpath-prefix "${FRONT_USER_HOME}"))
+				(require-any
+					(extension com.apple.app-sandbox.read)
+					(extension com.apple.app-sandbox.read-write)
+					(extension com.apple.security.exception.files.absolute-path.read-only)
+					(extension com.apple.security.exception.files.absolute-path.read-write)
+					(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+					(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches")))))))
+(deny file-read-xattr
+	(require-not (subpath-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter")))
+(deny file-write*
+	(require-all
+		(require-all (require-not (subpath "/private/var/root/Library/Logs/FilesystemMetadataSnapshot"))
+(require-not (subpath "/private/var/tmp/com.apple.FilesystemMetadataSnapshotService"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.FilesystemMetadataSnapshotService")))
+		(literal "/private/var/")
+		(regex #"^/private/var/mobile/Library/Logs/CrashReporter/FilesystemMeta" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/FilesystemMeta" #"^/private/var/mobile/Library/Logs/CrashReporter/[.]FilesystemMeta" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/[.]FilesystemMeta" #"^/private/var/euser[0-9]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])FilesystemMeta" #"^/private/var/[-0-9A-F]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])FilesystemMeta" #"^/private/var/Users/[^/]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])FilesystemMeta")
+		(subpath-prefix "${FRONT_USER_HOME}")))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny iokit-open-user-client
+	(require-all
+		(require-not (iokit-user-client-class "AppleNVMeUpdateUC"))
+		(require-not (extension com.apple.security.exception.iokit-user-client-class))
+		(iokit-user-client-class "RootDomainUserClient")))
+(deny iokit-open-service
+	(require-all
+		(entitlement-is-present com.apple.security.exception.iokit-user-client-class)
+		(iokit-user-client-class "IOPMrootDomain")))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.spaceattributiond"))
+		(require-not (global-name "com.apple.cache_delete"))
+		(require-not (global-name "com.apple.atc.xpc"))
+		(require-not (global-name "com.apple.cache_delete.public"))
+		(global-name "com.apple.iokit.powerdxpc")
+		(global-name "com.apple.PowerManagement.control")
+		(extension com.apple.security.exception.mach-lookup.global-name)
+		(extension com.apple.security.exception.mach-lookup.local-name)
+		(global-name "com.apple.powerlog.plxpclogger.xpc")
+		(require-any
+			(require-all
+				(global-name "com.apple.system.notification_center")
+				(entitlement-is-bool-true com.apple.security.on-demand-install-capable)
+				(require-any
+					(xpc-service-name-regex #".+")
+					(xpc-service-name "com.apple.WebKit.")
+					(xpc-service-name "com.apple.CoreGraphics.CGPDFService")))
+			(require-all
+				(global-name "com.apple.lsd.openurl")
+				(global-name "com.apple.tccd")
+				(global-name "com.apple.lsd.advertisingidentifiers")
+				(xpc-service-name-regex #".+")))))
+(deny system-fsctl
+	(require-all
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "J" 19)))
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "J" 117)))
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "J" 71)))
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "J" 114)))
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "J" 37)))
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "J" 131)))
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "J" 125)))
+		(fsctl-command-regex [UNSUPPORTED](_IO "J" 113))))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-all
+		(require-not (preference-domain "com.apple.FilesystemMetadataSnapshotService"))
+		(preference-domain "com.apple.CrashReporter")))
+(deny storage-class-map)

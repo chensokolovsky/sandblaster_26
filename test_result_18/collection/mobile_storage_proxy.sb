@@ -1,0 +1,39 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-not (subpath "/private/var/run/mobile_image_mounter"))
+		(require-not (literal-prefix "${FRONT_USER_HOME}/Library/.FactoryMacCheckEnabled"))
+		(require-not (literal "/private/var/preferences/com.apple.security.plist"))))
+(deny file-write*
+	(subpath "/private/var/run/mobile_image_mounter"))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.mobile.storage_mounter.xpc"))
+		(global-name "com.apple.mobile.heartbeat")
+		(global-name "com.apple.securityd")
+		(extension com.apple.security.exception.mach-lookup.global-name)
+		(extension com.apple.security.exception.mach-lookup.local-name)
+		(global-name "com.apple.trustd")
+		(require-any
+			(require-all
+				(global-name "com.apple.system.notification_center")
+				(entitlement-is-bool-true com.apple.security.on-demand-install-capable)
+				(require-any
+					(xpc-service-name-regex #".+")
+					(xpc-service-name "com.apple.WebKit.")
+					(xpc-service-name "com.apple.CoreGraphics.CGPDFService")))
+			(require-all
+				(global-name "com.apple.lsd.openurl")
+				(global-name "com.apple.tccd")
+				(global-name "com.apple.lsd.advertisingidentifiers")
+				(xpc-service-name-regex #".+")))))
+(deny system-kas-info)
+(deny storage-class-map)

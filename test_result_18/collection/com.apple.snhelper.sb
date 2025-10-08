@@ -1,0 +1,10 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-not (subpath "/var/mobile/Library/Caches")))
+(deny file-write-setugid)
+(deny job-creation)
+(deny mach-register
+	(require-not (global-name "com.apple.snhelper")))
+(deny system-kas-info)
+(deny storage-class-map)
