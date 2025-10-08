@@ -1,0 +1,62 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-not (subpath "/private/var/tmp"))
+		(require-not (subpath-prefix "${HOME}/Media/Vibrations"))
+		(require-not (subpath-prefix "${PROCESS_TEMP_DIR}"))
+		(entitlement-is-bool-true com.apple.Contacts.database-allow)
+		(extension com.apple.tcc.kTCCServiceAddressBook)
+		(subpath-prefix "${HOME}/Library/AddressBook/Delegates")
+		(subpath-prefix "${HOME}/Library/AddressBook")
+		(literal-prefix "${HOME}/Library/Preferences/com.apple.mobilephone.speeddial.plist")))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal "/private/var"))
+		(require-not (literal-prefix "${HOME}/Media"))
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))))
+(deny file-write*
+	(require-all
+		(require-not (subpath "/private/var/tmp"))
+		(require-not (subpath-prefix "${HOME}/Media/Vibrations"))
+		(require-not (subpath-prefix "${PROCESS_TEMP_DIR}"))
+		(entitlement-is-bool-true com.apple.Contacts.database-allow)
+		(extension com.apple.tcc.kTCCServiceAddressBook)
+		(require-any
+			(subpath-prefix "${HOME}/Library/AddressBook/Delegates")
+			(require-all
+				(vnode-type REGULAR-FILE)
+				(literal-prefix "${HOME}/Library/AddressBook/")))))
+(deny file-write-create
+	(require-all
+		(require-not (literal-prefix "${HOME}/Media"))
+		(require-not (literal-prefix "${HOME}/Media/Vibrations"))))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(global-name "com.apple.identityservicesd.idquery.embedded.auth")
+		(global-name "com.apple.contactsd")
+		(global-name "com.apple.spotlight.IndexDelegateAgent")
+		(global-name "com.apple.accountsd.accountmanager")
+		(global-name "com.apple.spotlight.IndexAgent")
+		(global-name "com.apple.ABDatabaseDoctor")
+		(global-name "com.apple.telephonyutilities.callservicesdaemon.callcapabilities")
+		(global-name "com.apple.cmfsyncagent.embedded.auth")))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-all
+		(preference-domain "com.apple.CoreDuet")
+		(preference-domain "com.apple.DataMigration")
+		(preference-domain "com.apple.icloud.findmydeviced.postwipe")
+		(preference-domain "com.apple.icloud.findmydeviced.public.notbackedup")
+		(preference-domain "com.apple.AppSupport")
+		(preference-domain "com.apple.AOSNotification.public.notbackedup")
+		(preference-domain "com.apple.PeoplePicker")))
+(deny storage-class-map)

@@ -1,0 +1,246 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Caches"))
+		(require-not (subpath-prefix "${HOME}/Containers/Bundle/Application"))
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/tmp"))
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/Containers/Bundle/Application"))
+		(require-not (subpath "/private/var/tmp"))
+		(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/Library/Caches"))
+		(require-all (require-not (subpath "/private/var/vm"))
+(require-not (subpath-prefix "${HOME}/Media/Downloads/com.apple.UserManagedAssets")))
+		(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/tmp"))
+		(require-not (subpath-prefix "${HOME}/tmp"))
+		(require-not (subpath "/private/var/containers/Bundle/Application"))
+		(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/com.apple.UserManagedAssets"))
+		(literal "/private/var/")
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.app-sandbox.read-write)
+			(extension com.apple.security.exception.files.absolute-path.read-only)
+			(extension com.apple.security.exception.files.absolute-path.read-write)
+			(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+			(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches"))
+			(require-all
+				(subpath-prefix "${FRONT_USER_HOME}")
+				(require-not (regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/Library/Caches"))
+				(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches"))
+				(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/tmp" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp"))
+				(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets")))
+			(require-all
+				(subpath-prefix "${HOME}")
+				(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches"))
+				(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets")))
+			(require-all
+				(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/tmp" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp")
+				(require-not (subpath-prefix "${HOME}"))))))
+(deny file-read-metadata
+	(require-all
+		(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Caches"))
+		(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/Library/Caches"))
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))
+		(require-any
+			(require-all
+				(literal "/private/var/")
+				(require-any
+					(require-all
+						(subpath-prefix "${FRONT_USER_HOME}")
+						(require-not (regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/Library/Caches"))
+						(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches")))
+					(require-all
+						(subpath-prefix "${HOME}")
+						(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches")))))
+			(require-all
+				(vnode-type DIRECTORY)
+				(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Caches"))
+				(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/Library/Caches"))
+				(require-any
+					(require-all
+						(literal "/private/var/")
+						(require-any
+							(require-all
+								(subpath-prefix "${FRONT_USER_HOME}")
+								(require-not (regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/Library/Caches"))
+								(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches")))
+							(require-all
+								(subpath-prefix "${FRONT_USER_HOME}/tmp")
+								(subpath-prefix "${FRONT_USER_HOME}/Containers/Bundle/Application")
+								(subpath "/private/var/tmp")
+								(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/Library/Caches")
+								(require-any (subpath "/private/var/vm")
+(subpath-prefix "${HOME}/Media/Downloads/com.apple.UserManagedAssets"))
+								(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/tmp")
+								(subpath-prefix "${HOME}/tmp")
+								(subpath "/private/var/containers/Bundle/Application")
+								(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/com.apple.UserManagedAssets")
+								(literal "/private/var/")
+								(require-any
+									(extension com.apple.app-sandbox.read)
+									(extension com.apple.app-sandbox.read-write)
+									(extension com.apple.security.exception.files.absolute-path.read-only)
+									(extension com.apple.security.exception.files.absolute-path.read-write)
+									(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+									(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches"))
+									(require-all
+										(subpath-prefix "${FRONT_USER_HOME}")
+										(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/Library/Caches")
+										(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches")
+										(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/tmp" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp")
+										(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets"))
+									(require-all
+										(subpath-prefix "${HOME}")
+										(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches")
+										(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets"))
+									(require-all
+										(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/tmp" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp")
+										(subpath-prefix "${HOME}"))))
+							(require-all
+								(subpath-prefix "${HOME}")
+								(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches")))))
+					(require-all
+						(subpath-prefix "${HOME}/Containers/Bundle/Application")
+						(subpath-prefix "${FRONT_USER_HOME}/tmp")
+						(subpath-prefix "${FRONT_USER_HOME}/Containers/Bundle/Application")
+						(subpath "/private/var/tmp")
+						(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/Library/Caches")
+						(require-any (subpath "/private/var/vm")
+(subpath-prefix "${HOME}/Media/Downloads/com.apple.UserManagedAssets"))
+						(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/tmp")
+						(subpath-prefix "${HOME}/tmp")
+						(subpath "/private/var/containers/Bundle/Application")
+						(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/com.apple.UserManagedAssets")
+						(literal "/private/var/")
+						(require-any
+							(extension com.apple.app-sandbox.read)
+							(extension com.apple.app-sandbox.read-write)
+							(extension com.apple.security.exception.files.absolute-path.read-only)
+							(extension com.apple.security.exception.files.absolute-path.read-write)
+							(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+							(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches"))
+							(require-all
+								(subpath-prefix "${FRONT_USER_HOME}")
+								(regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/Library/Caches")
+								(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches")
+								(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/tmp" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp")
+								(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets"))
+							(require-all
+								(subpath-prefix "${HOME}")
+								(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches")
+								(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets"))
+							(require-all
+								(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/tmp" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp")
+								(subpath-prefix "${HOME}")))))))))
+(deny file-write*
+	(require-all
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/tmp"))
+		(require-not (subpath-prefix "${HOME}/Media/Downloads/com.apple.UserManagedAssets"))
+		(require-not (subpath "/private/var/tmp"))
+		(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/com.apple.UserManagedAssets"))
+		(literal "/private/var/")
+		(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets")
+		(require-not (subpath-prefix "${FRONT_USER_HOME}"))
+		(subpath-prefix "${HOME}")))
+(deny file-write-create
+	(require-all
+		(vnode-type DIRECTORY)
+		(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Caches"))
+		(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/Library/Caches"))
+		(literal "/private/var/")
+		(require-any
+			(require-all
+				(subpath-prefix "${FRONT_USER_HOME}")
+				(require-not (regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/Library/Caches"))
+				(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches")))
+			(require-all
+				(subpath-prefix "${HOME}")
+				(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches"))
+				(subpath-prefix "${HOME}/Media/Downloads/com.apple.UserManagedAssets"))
+			(require-all
+				(subpath "/private/var/tmp")
+				(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/com.apple.UserManagedAssets")
+				(literal "/private/var/")
+				(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/com[.]apple[.]UserManagedAssets")
+				(subpath-prefix "${FRONT_USER_HOME}")
+				(subpath-prefix "${HOME}")))))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(require-all
+		(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/Library/Caches"))
+		(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/tmp"))
+		(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Shared/AppGroup/[UNSUPPORTED]+/Library/Caches"))
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/Containers/Bundle/Application"))
+		(require-not (subpath "/private/var/containers/Bundle/Application"))
+		(require-not (subpath-prefix "${HOME}/Containers/Bundle/Application"))
+		(require-not (subpath-prefix "${HOME}/tmp"))
+		(require-any
+			(entitlement-is-present com.apple.private.oop-jit.loader)
+			(require-all
+				(literal "/private/var/")
+				(require-any
+					(require-all
+						(subpath-prefix "${FRONT_USER_HOME}")
+						(require-not (regex #"^/private/var/mobile/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/Shared/AppGroup/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/Shared/AppGroup/[^/]+/Library/Caches"))
+						(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches"))
+						(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/tmp" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp")))
+					(require-all
+						(subpath-prefix "${HOME}")
+						(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/Library/Caches"))
+						(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/tmp" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/tmp" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/tmp")))))
+			(require-all
+				(extension com.apple.sandbox.oopjit)
+				(require-not (subpath "/private/var/OOPJit"))))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.lsd.xpc"))
+		(require-not (global-name "com.apple.coreduetd"))
+		(require-not (global-name "com.apple.lsd.modifydb"))
+		(require-not (global-name "com.apple.cache_delete"))
+		(require-not (global-name "com.apple.coreduetd.knowledge"))
+		(require-not (global-name "com.apple.frontboard.systemappservices"))
+		(global-name "com.apple.mobile.usermanagerd.xpc")
+		(extension com.apple.security.exception.mach-lookup.global-name)
+		(extension com.apple.security.exception.mach-lookup.local-name)
+		(require-any
+			(require-all
+				(global-name "com.apple.system.notification_center")
+				(entitlement-is-bool-true com.apple.security.on-demand-install-capable)
+				(require-any
+					(xpc-service-name-regex #".+")
+					(xpc-service-name "com.apple.WebKit.")
+					(xpc-service-name "com.apple.CoreGraphics.CGPDFService")))
+			(require-all
+				(global-name "com.apple.lsd.openurl")
+				(global-name "com.apple.tccd")
+				(global-name "com.apple.lsd.advertisingidentifiers")
+				(xpc-service-name-regex #".+")))))
+(deny sysctl*
+	(sysctl-name "vm.freeze_enabled"))
+(deny system-fsctl
+	(require-all
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "J" 2)))
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "h" 24)))
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "J" 112)))
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "J" 32)))
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "J" 3)))
+		(require-not (fsctl-command-regex [UNSUPPORTED](_IO "J" 113)))
+		(fsctl-command-regex [UNSUPPORTED](_IO "J" 14))))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-all
+		(require-not (preference-domain "CacheDeleteAppContainerCaches"))
+		(preference-domain "com.apple.itunesstored")))
+(deny user-preference-write
+	(preference-domain "CacheDeleteAppContainerCaches"))
+(deny storage-class-map)

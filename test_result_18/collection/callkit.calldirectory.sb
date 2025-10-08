@@ -1,0 +1,50 @@
+(version 1)
+(allow default)
+(deny file-issue-extension
+	(require-all
+		(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.CallKit.CallDirectory")
+		(extension-class "com.apple.app-sandbox.read-write")
+		(extension-class "com.apple.app-sandbox.read")
+		(extension-class "com.apple.mediaserverd.read-write")
+		(extension-class "com.apple.aned.read-only")
+		(extension-class "com.apple.mediaserverd.read"))
+	(require-all
+		(subpath "/private/var/tmp/com.apple.CallKit.CallDirectory")
+		(extension-class "com.apple.app-sandbox.read-write")
+		(extension-class "com.apple.app-sandbox.read")
+		(extension-class "com.apple.mediaserverd.read-write")
+		(extension-class "com.apple.aned.read-only")
+		(extension-class "com.apple.mediaserverd.read")))
+(deny file-read*
+	(require-all
+		(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.CallKit.CallDirectory"))
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/Library/CallDirectory"))
+		(require-not (subpath "/private/var/tmp/com.apple.CallKit.CallDirectory"))))
+(deny file-read-metadata
+	(require-all
+		(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.CallKit.CallDirectory"))
+		(require-not (subpath "/private/var/tmp/com.apple.CallKit.CallDirectory"))
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))
+		(subpath-prefix "${FRONT_USER_HOME}/Library/CallDirectory")
+		(subpath "/private/var/tmp/com.apple.CallKit.CallDirectory")))
+(deny file-write*
+	(require-all
+		(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.CallKit.CallDirectory"))
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/Library/CallDirectory"))
+		(subpath "/private/var/tmp/com.apple.CallKit.CallDirectory")))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.dmd.policy"))
+		(require-not (global-name "com.apple.awdd"))))
+(deny system-kas-info)
+(deny user-preference-read
+	(preference-domain "com.apple.CallKit.CallDirectory"))
+(deny storage-class-map)

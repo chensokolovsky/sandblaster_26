@@ -1,0 +1,35 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(debug-mode)
+		(subpath "/AppleInternal")
+		(subpath "/usr/local/lib"))
+	(require-all
+		(extension com.apple.app-sandbox.read)
+		(extension com.apple.app-sandbox.read-write)
+		(extension com.apple.security.exception.files.absolute-path.read-only)
+		(extension com.apple.security.exception.files.absolute-path.read-write)
+		(require-any
+			(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+			(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches")))))
+(deny file-write-setugid)
+(deny ipc-posix-shm*
+	(ipc-posix-name "apple.cfprefs."))
+(deny ipc-posix-shm-read-data
+	(require-all
+		(ipc-posix-name "apple.shm.notification_center")
+		(entitlement-is-bool-true com.apple.security.on-demand-install-capable)))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.syncdefaultsd"))
+		(require-not (global-name "com.apple.kvsd"))
+		(require-not (global-name "com.apple.FSEvents"))))
+(deny syscall-unix
+	(c1 3c39 6c56 9ce0))
+(deny system-kas-info)
+(deny storage-class-map)

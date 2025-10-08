@@ -1,0 +1,63 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all (require-not (literal "/private/var/tmp/HealthWrap-"))
+(require-not (literal-prefix "${PROCESS_TEMP_DIR}/HealthWrap-"))))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))))
+(deny file-write*
+	(require-any (literal "/private/var/tmp/HealthWrap-")
+(literal-prefix "${PROCESS_TEMP_DIR}/HealthWrap-")))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.healthd"))
+		(require-not (global-name "com.apple.private.healthd.server-internal"))
+		(extension com.apple.security.exception.mach-lookup.global-name)
+		(extension com.apple.security.exception.mach-lookup.local-name)
+		(require-any
+			(require-all
+				(global-name "com.apple.ckdiscretionaryd.debug")
+				(require-any
+					(xpc-service-name-regex #".+")
+					(xpc-service-name "com.apple.WebKit.")
+					(xpc-service-name "com.apple.CoreGraphics.CGPDFService")))
+			(require-all
+				(require-any (global-name "com.apple.cloudd.debug")
+(global-name "com.apple.cloudkit.partlycloudd.debug"))
+				(require-any
+					(xpc-service-name-regex #".+")
+					(xpc-service-name "com.apple.WebKit.")
+					(xpc-service-name "com.apple.CoreGraphics.CGPDFService")))
+			(require-all
+				(global-name "com.apple.cloudkit.partlycloudd")
+				(require-any
+					(xpc-service-name-regex #".+")
+					(xpc-service-name "com.apple.WebKit.")
+					(xpc-service-name "com.apple.CoreGraphics.CGPDFService")))
+			(require-all
+				(global-name "com.apple.cloudasset.cloudd")
+				(global-name "com.apple.ckdiscretionaryd")
+				(global-name "com.apple.cloudd")
+				(require-any
+					(require-all
+						(global-name "com.apple.system.notification_center")
+						(entitlement-is-bool-true com.apple.security.on-demand-install-capable)
+						(xpc-service-name-regex #".+"))
+					(require-all
+						(global-name "com.apple.lsd.openurl")
+						(global-name "com.apple.tccd")
+						(global-name "com.apple.lsd.advertisingidentifiers")
+						(xpc-service-name-regex #".+")))))))
+(deny system-kas-info)
+(deny user-preference-read
+	(preference-domain "com.apple.CloudKit"))
+(deny storage-class-map)

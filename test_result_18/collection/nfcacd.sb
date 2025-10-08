@@ -1,0 +1,93 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-not (literal "/private/var/preferences/SystemConfiguration/com.apple.radios.plist"))
+		(require-not (literal "/usr/libexec"))))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))))
+(deny file-write-setugid)
+(deny iokit-open-user-client
+	(require-all
+		(require-not (iokit-user-client-class "AppleStockholmControlUserClient"))
+		(require-not (iokit-user-client-class "AppleSMCSensorDispatcherUserClient"))
+		(iokit-user-client-class "AppleBasebandUserClient")
+		(iokit-user-client-class "ApplePPMUserClient")))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.securityd"))
+		(require-not (global-name "com.apple.networkscored"))
+		(require-not (global-name "com.apple.powerlog.plxpclogger.xpc"))
+		(require-not (global-name "com.apple.SystemConfiguration.helper"))
+		(require-not (global-name "com.apple.commcenter.xpc"))
+		(require-not (global-name "com.apple.SystemConfiguration.configd"))
+		(require-not (global-name "com.apple.accountsd.accountmanager"))
+		(require-not (global-name "com.apple.GSSCred"))
+		(require-not (global-name "com.apple.accessoryd.nf-events"))
+		(require-not (global-name "com.apple.cfnetwork.cfnetworkagent"))
+		(require-not (global-name "com.apple.nehelper"))
+		(require-not (global-name "com.apple.networkserviceproxy.fetch-token"))
+		(require-not (global-name "com.apple.usymptomsd"))
+		(require-not (global-name "com.apple.trustd"))
+		(require-not (global-name "com.apple.commcenter.cupolicy.xpc"))
+		(require-not (global-name "com.apple.nsurlsessiond"))
+		(require-not (global-name "com.apple.symptomsd"))
+		(require-not (global-name "com.apple.AppSSO.service-xpc"))
+		(require-not (global-name "com.apple.symptoms.symptomsd.managed_events"))
+		(require-not (global-name "com.apple.nfcd.hwmanager"))
+		(require-not (global-name "com.apple.iokit.powerdxpc"))
+		(require-not (global-name "com.apple.PowerManagement.control"))
+		(require-not (global-name "com.apple.networkd"))
+		(require-not (global-name "com.apple.cfnetwork.AuthBrokerAgent"))
+		(require-not (extension com.apple.security.exception.mach-lookup.global-name))
+		(require-not (extension com.apple.security.exception.mach-lookup.local-name))
+		(global-name "com.apple.SystemConfiguration.DNSConfiguration")
+		(global-name "com.apple.SystemConfiguration.NetworkInformation")
+		(global-name "com.apple.nesessionmanager")
+		(global-name "com.apple.dnssd.service")
+		(global-name "com.apple.SystemConfiguration.PPPController")
+		(global-name "com.apple.SystemConfiguration.SCNetworkReachability")
+		(global-name "com.apple.lsd.openurl")
+		(global-name "com.apple.tccd")
+		(global-name "com.apple.lsd.advertisingidentifiers")
+		(require-any
+			(xpc-service-name "com.apple.WebKit.")
+			(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
+			(xpc-service-name-regex #".+")
+			(require-all
+				(global-name "com.apple.ak.anisette.xpc")
+				(process-attribute is-apple-signed-executable)
+				(entitlement-is-bool-true com.apple.authkit.client)
+				(entitlement-is-bool-true com.apple.authkit.client.private)
+				(entitlement-is-bool-true com.apple.authkit.client.internal))
+			(require-all
+				(global-name "com.apple.ak.auth.xpc")
+				(process-attribute is-apple-signed-executable)
+				(entitlement-is-bool-true com.apple.authkit.client)
+				(entitlement-is-bool-true com.apple.authkit.client.private)
+				(entitlement-is-bool-true com.apple.authkit.client.internal))
+			(require-all
+				(global-name "com.apple.networkd_privileged")
+				(entitlement-is-bool-true com.apple.networkd.modify_settings)
+				(entitlement-is-bool-true com.apple.networkd.disable_opportunistic)
+				(entitlement-is-bool-true com.apple.networkd.advisory_socket)
+				(entitlement-is-bool-true com.apple.networkd_privileged)
+				(entitlement-is-bool-true com.apple.networkd.persistent_interface))
+			(require-all
+				(global-name "com.apple.system.notification_center")
+				(entitlement-is-bool-true com.apple.security.on-demand-install-capable)))))
+(deny syscall-unix
+	(c1 1523 2d62 9ce0))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-all
+		(require-not (preference-domain "com.apple.nfcacd"))
+		(require-not (preference-domain "com.apple.stockholm.awd"))))
+(deny user-preference-write
+	(require-all
+		(require-not (preference-domain "com.apple.nfcacd"))
+		(preference-domain "com.apple.stockholm.awd")))
+(deny storage-class-map)

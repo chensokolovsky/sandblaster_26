@@ -1,0 +1,81 @@
+(version 1)
+(allow default)
+(deny file-issue-extension
+	(require-all
+		(require-any (subpath "/private/var/tmp/com.apple.fileprovider.ArchiveService")
+(subpath "/private/var/tmp/com.apple.desktopservices.ArchiveService")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.fileprovider.ArchiveService"))
+		(require-not (extension-class "com.apple.app-sandbox.read-write"))
+		(require-not (extension-class "com.apple.app-sandbox.read"))
+		(require-not (extension-class "com.apple.mediaserverd.read-write"))
+		(require-not (extension-class "com.apple.aned.read-only"))
+		(require-not (extension-class "com.apple.mediaserverd.read")))
+	(require-all
+		(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.desktopservices.ArchiveService")
+		(require-not (extension-class "com.apple.app-sandbox.read-write"))
+		(require-not (extension-class "com.apple.app-sandbox.read"))
+		(require-not (extension-class "com.apple.mediaserverd.read-write"))
+		(require-not (extension-class "com.apple.aned.read-only"))
+		(require-not (extension-class "com.apple.mediaserverd.read"))))
+(deny file-read*
+	(require-all
+		(require-all (require-not (subpath "/private/var/tmp/com.apple.fileprovider.ArchiveService"))
+(require-not (subpath "/private/var/tmp/com.apple.desktopservices.ArchiveService"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.fileprovider.ArchiveService")))
+		(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.desktopservices.ArchiveService"))))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-all (require-not (subpath "/private/var/tmp/com.apple.fileprovider.ArchiveService"))
+(require-not (subpath "/private/var/tmp/com.apple.desktopservices.ArchiveService"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.fileprovider.ArchiveService")))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))
+		(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.desktopservices.ArchiveService")))
+(deny file-write*
+	(require-all
+		(require-all (require-not (subpath "/private/var/tmp/com.apple.fileprovider.ArchiveService"))
+(require-not (subpath "/private/var/tmp/com.apple.desktopservices.ArchiveService"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.fileprovider.ArchiveService")))
+		(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.desktopservices.ArchiveService")))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.bird"))
+		(require-not (global-name "com.apple.FileCoordination"))
+		(require-not (global-name "com.apple.FileProvider"))
+		(require-not (global-name "com.apple.ProgressReporting"))
+		(require-not (global-name "com.apple.mobile.keybagd.UserManager.xpc"))
+		(require-not (global-name "com.apple.mobile.usermanagerd.xpc"))
+		(require-not (extension com.apple.security.exception.mach-lookup.global-name))
+		(require-not (extension com.apple.security.exception.mach-lookup.local-name))
+		(require-any
+			(require-all
+				(global-name "com.apple.system.notification_center")
+				(entitlement-is-bool-true com.apple.security.on-demand-install-capable)
+				(require-any
+					(xpc-service-name-regex #".+")
+					(xpc-service-name "com.apple.WebKit.")
+					(xpc-service-name "com.apple.CoreGraphics.CGPDFService")))
+			(require-all
+				(global-name "com.apple.lsd.openurl")
+				(global-name "com.apple.tccd")
+				(global-name "com.apple.lsd.advertisingidentifiers")
+				(xpc-service-name-regex #".+")))))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-all
+		(require-not (preference-domain "com.apple.desktopservices"))
+		(require-not (preference-domain "com.apple.fileproviderd"))
+		(require-not (preference-domain "com.apple.iclouddrive.features"))
+		(require-any (preference-domain "com.apple.FileProvider.ArchiveService")
+(preference-domain "com.apple.desktopservices.ArchiveService"))))
+(deny user-preference-write
+	(require-any (preference-domain "com.apple.FileProvider.ArchiveService")
+(preference-domain "com.apple.desktopservices.ArchiveService")))
+(deny storage-class-map)

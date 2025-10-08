@@ -1,0 +1,45 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-not (literal "/private/var/preferences/com.apple.networkd.plist"))
+		(require-not (literal "/private/var/Managed Preferences/mobile/com.apple.SystemConfiguration.plist"))
+		(require-not (literal "/private/var/preferences/com.apple.security.plist"))
+		(require-not (literal "/private/var/db/com.apple.networkextension.tracker-info"))
+		(literal "/private/var/preferences/com.apple.NetworkStatistics.plist")
+		(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.nsurlstoragedresources/Library/dafsaData.bin")
+		(require-any
+			(require-all
+				(process-attribute is-apple-signed-executable)
+				(literal "/private/var/preferences/com.apple.networkextension.uuidcache.plist"))
+			(require-all
+				(literal "/private/var/preferences/com.apple.networkextension.plist")
+				(entitlement-is-present com.apple.private.networkextension.configuration)
+				(require-any
+					(extension com.apple.app-sandbox.read)
+					(extension com.apple.app-sandbox.read-write)
+					(extension com.apple.security.exception.files.absolute-path.read-only)
+					(extension com.apple.security.exception.files.absolute-path.read-write)
+					(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+					(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches")))))))
+(deny file-write-create
+	(literal-prefix "${HOME}/Library/Logs/CrashReporter/CFNetwork_"))
+(deny file-write-setugid)
+(deny iokit-open-user-client
+	(require-all
+		(require-not (extension com.apple.security.exception.iokit-user-client-class))
+		(iokit-user-client-class "AppleKeyStoreUserClient")))
+(deny job-creation)
+(deny syscall-unix
+	(c1 1523 95f6 9ce0))
+(deny sysctl-read
+	(require-all
+		(sysctl-name "net.statistics")
+		(sysctl-name "net.routetable.")
+		(require-any (sysctl-name "kern.nisdomainname")
+(sysctl-name "kern.ipc.maxsockbuf"))))
+(deny system-kas-info)
+(deny storage-class-map)

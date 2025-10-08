@@ -1,0 +1,33 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-all (require-not (subpath "/private/var/tmp/com.apple.siri.morphunassetsupdaterd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.siri.morphunassetsupdaterd")))
+		(extension com.apple.assets.read)
+		(subpath "/private/var/MobileAsset")
+		(subpath-prefix "${HOME}/Library/Assets")))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))))
+(deny file-write*
+	(require-any (subpath "/private/var/tmp/com.apple.siri.morphunassetsupdaterd")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.siri.morphunassetsupdaterd")))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny system-kas-info)
+(deny user-preference-read
+	(require-all
+		(require-not (preference-domain "com.apple.assistant.support"))
+		(require-not (preference-domain "com.apple.assistant.backedup"))
+		(require-not (preference-domain "com.apple.siri.morphunassetsupdaterd"))
+		(preference-domain "com.apple.MobileAsset")))
+(deny user-preference-write
+	(preference-domain "com.apple.siri.morphunassetsupdaterd"))
+(deny storage-class-map)

@@ -1,0 +1,30 @@
+(version 1)
+(allow default)
+(deny generic-issue-extension)
+(deny iokit-issue-extension)
+(deny iokit-open-user-client
+	(require-all
+		(require-not (iokit-user-client-class "AppleNVMeEANUC"))
+		(require-not (iokit-user-client-class "AppleEmbeddedTouchEEPROMDriverUC"))
+		(require-not (iokit-user-client-class "RootDomainUserClient"))
+		(iokit-user-client-class "AFKEndpointInterfaceUserClient")))
+(deny iokit-set-properties
+	(require-not (iokit-user-client-class "AppleANS2CGNVMeController"))
+	(require-all (require-not (iokit-property "fw-write-done"))
+(require-not (iokit-property "bis-write-done"))))
+(deny job-creation)
+(deny mach-issue-extension)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.diagnosticd"))
+		(require-not (global-name "com.apple.system.logger"))
+		(require-not (global-name "com.apple.diagd"))
+		(require-not (global-name "com.apple.logd"))
+		(global-name "com.apple.cfprefsd.daemon")
+		(global-name "com.apple.cfprefsd.daemon.system")
+		(global-name "com.apple.analyticsd")
+		(global-name "com.apple.CARenderServer")))
+(deny process-exec*)
+(deny process-exec-interpreter)
+(deny system-kas-info)
+(deny storage-class-map)

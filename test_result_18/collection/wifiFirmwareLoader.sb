@@ -1,0 +1,43 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-not (literal "/private/var/preferences/SystemConfiguration/com.apple.wifi.plist"))
+		(require-not (subpath "/AppleInternal"))
+		(require-all (require-not (literal "/private/var/logs/wifiFirmwareLoader.log"))
+(require-not (literal "/private/var/root/Library/Preferences/com.apple.wifiFirmwareLoader.plist"))
+(require-not (literal "/private/var/Managed Preferences/mobile/com.apple.wifiFirmwareLoader.plist")))
+		(require-all (require-not (subpath "/usr/share/zoneinfo.default"))
+(require-not (subpath "/usr/share/firmware/wifi")))
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.app-sandbox.read-write)
+			(extension com.apple.security.exception.files.absolute-path.read-only)
+			(extension com.apple.security.exception.files.absolute-path.read-write)
+			(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+			(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches"))
+			(require-all
+				(subpath "/usr/local/lib")
+				(debug-mode)))))
+(deny file-write*
+	(literal "/private/var/logs/wifiFirmwareLoader.log"))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny iokit-open-user-client
+	(require-all
+		(require-not (iokit-user-client-class "AppleBCMWLANUserClient"))
+		(iokit-user-client-class "IOUserUserClient")))
+(deny iokit-set-properties
+	(iokit-property "PlatformConfig"))
+(deny job-creation)
+(deny mach-lookup
+	(require-not (global-name "com.apple.corecaptured")))
+(deny system-kas-info)
+(deny storage-class-map)

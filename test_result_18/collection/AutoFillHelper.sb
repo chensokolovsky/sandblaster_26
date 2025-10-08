@@ -1,0 +1,28 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-not (literal-prefix "${HOME}/Library/Safari/AutoFillQuirks.plist"))
+		(require-not (subpath "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.nsurlstoragedresources/Library/dafsaData.bin"))
+		(extension com.apple.assets.read)
+		(require-not (subpath "/private/var/MobileAsset"))
+		(require-not (subpath-prefix "${HOME}/Library/Assets"))))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))))
+(deny file-write-setugid)
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.mobileasset.autoasset"))
+		(require-not (global-name "com.apple.mobileassetd"))
+		(require-not (global-name "com.apple.mobileassetd.v2"))))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-all
+		(require-not (preference-domain "com.apple.SafariFoundation.AutoFillHelper"))
+		(preference-domain "com.apple.MobileAsset")))
+(deny user-preference-write
+	(preference-domain "com.apple.SafariFoundation.AutoFillHelper"))
+(deny storage-class-map)

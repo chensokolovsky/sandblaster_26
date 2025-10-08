@@ -1,0 +1,125 @@
+(version 1)
+(allow default)
+(deny file-issue-extension
+	(require-all
+		(require-any (subpath "/private/var/tmp/com.apple.mediaparserd")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.mediaparserd"))
+		(extension-class "com.apple.app-sandbox.read-write")
+		(extension-class "com.apple.app-sandbox.read")
+		(extension-class "com.apple.mediaserverd.read-write")
+		(extension-class "com.apple.aned.read-only")
+		(extension-class "com.apple.mediaserverd.read")))
+(deny file-read*
+	(require-all
+		(require-all (require-not (subpath "/private/var/tmp/com.apple.mediaparserd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.mediaparserd")))
+		(require-not (subpath "/usr/libexec"))
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.app-sandbox.read-write)
+			(extension com.apple.security.exception.files.absolute-path.read-only)
+			(extension com.apple.security.exception.files.absolute-path.read-write)
+			(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+			(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches"))
+			(require-all
+				(debug-mode)
+				(require-any
+					(require-not (literal-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter"))
+					(require-all
+						(literal "/private/var/")
+						(regex #"^/private/var/mobile/Library/Logs/CrashReporter/mediaparserd_" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/mediaparserd_" #"^/private/var/mobile/Library/Logs/CrashReporter/[.]mediaparserd_" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/[.]mediaparserd_" #"^/private/var/euser[0-9]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])mediaparserd_" #"^/private/var/[-0-9A-F]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])mediaparserd_" #"^/private/var/Users/[^/]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])mediaparserd_")
+						(subpath-prefix "${FRONT_USER_HOME}")))))))
+(deny file-read-metadata
+	(require-all
+		(debug-mode)
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter")))
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))
+		(require-all (require-not (subpath "/private/var/tmp/com.apple.mediaparserd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.mediaparserd")))
+		(subpath "/usr/libexec")
+		(require-any
+			(extension com.apple.app-sandbox.read)
+			(extension com.apple.app-sandbox.read-write)
+			(extension com.apple.security.exception.files.absolute-path.read-only)
+			(extension com.apple.security.exception.files.absolute-path.read-write)
+			(require-any (subpath "/private/var/hardware/FactoryData")
+(literal "/usr/standalone/firmware/apticket.der"))
+			(require-any (literal "/System/Library/Caches/apticket.der")
+(subpath "/System/Library/Caches/com.apple.factorydata")
+(subpath "/System/Library/Caches/com.apple.kernelcaches"))
+			(require-all
+				(debug-mode)
+				(require-any
+					(literal-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter")
+					(require-all
+						(literal "/private/var/")
+						(regex #"^/private/var/mobile/Library/Logs/CrashReporter/mediaparserd_" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/mediaparserd_" #"^/private/var/mobile/Library/Logs/CrashReporter/[.]mediaparserd_" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/[.]mediaparserd_" #"^/private/var/euser[0-9]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])mediaparserd_" #"^/private/var/[-0-9A-F]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])mediaparserd_" #"^/private/var/Users/[^/]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])mediaparserd_")
+						(subpath-prefix "${FRONT_USER_HOME}")))))))
+(deny file-read-xattr
+	(require-all
+		(debug-mode)
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/Library/Logs/CrashReporter"))))
+(deny file-write*
+	(require-any (subpath "/private/var/tmp/com.apple.mediaparserd")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.mediaparserd"))
+	(require-all
+		(debug-mode)
+		(literal "/private/var/")
+		(subpath-prefix "${FRONT_USER_HOME}")
+		(require-not (regex #"^/private/var/mobile/Library/Logs/CrashReporter/mediaparserd_" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/mediaparserd_" #"^/private/var/mobile/Library/Logs/CrashReporter/[.]mediaparserd_" #"^/private/var/mobile/Library/Logs/CrashReporter/Retired/[.]mediaparserd_" #"^/private/var/euser[0-9]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])mediaparserd_" #"^/private/var/[-0-9A-F]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])mediaparserd_" #"^/private/var/Users/[^/]+/Library/Logs/CrashReporter/(((Retired/)?|[.])|Retired/[.])mediaparserd_"))))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny iokit-get-properties
+	(require-all
+		(iokit-property "product-id")
+		(iokit-user-client-class "IOPlatformDevice")))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.diagnosticd"))
+		(require-all (require-not (global-name "com.apple.coremedia.figcpecryptor"))
+(require-not (global-name "com.apple.coremedia.mediaplaybackd.figcpecryptor.xpc")))
+		(require-all (require-not (global-name "com.apple.coremedia.samplegenerator.xpc"))
+(require-not (global-name "com.apple.coremedia.mediaplaybackd.samplegenerator.xpc")))
+		(require-not (global-name "com.apple.logd.events"))
+		(require-not (global-name "com.apple.audio.AudioComponentRegistrar"))
+		(require-not (extension com.apple.security.exception.mach-lookup.local-name))
+		(require-not (global-name "com.apple.coremedia.mediaplaybackd.bytestream.xpc"))
+		(require-not (extension com.apple.security.exception.mach-lookup.global-name))
+		(require-not (global-name "com.apple.coremedia.formatreader.xpc"))
+		(require-not (global-name "com.apple.coremedia.bytestream.xpc"))
+		(require-not (global-name "com.apple.lsd.mapdb"))
+		(require-not (global-name "com.apple.coremedia.mediaplaybackd.formatreader.xpc"))
+		(require-not (global-name "com.apple.logd"))
+		(global-name "com.apple.system.notification_center")
+		(entitlement-is-bool-true com.apple.security.on-demand-install-capable)))
+(deny syscall-unix
+	(c1 67ed 35ff 9ce0))
+(deny syscall-mach
+	(cb 67f7 35fd 9ce0))
+(deny sysctl-read
+	(sysctl-name "kern.bootargs"))
+(deny system-fsctl
+	(fsctl-command-regex [UNSUPPORTED](_IO "J" 68)))
+(deny system-kas-info)
+(deny system-mac-syscall
+	(require-all
+		(require-not (mac-policy-name "AMFI"))
+		(mac-policy-name "Sandbox")))
+(deny user-preference-read
+	(require-all
+		(preference-domain "com.apple.CrashReporter")
+		(debug-mode))
+	(require-all
+		(require-not (preference-domain "com.apple.coremedia"))
+		(preference-domain "com.apple.coreaudio")))
+(deny storage-class-map)

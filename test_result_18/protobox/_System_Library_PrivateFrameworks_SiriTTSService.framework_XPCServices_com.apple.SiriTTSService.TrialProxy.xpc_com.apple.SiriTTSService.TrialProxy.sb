@@ -1,0 +1,22 @@
+(version 1)
+(allow default)
+(deny generic-issue-extension)
+(deny iokit-issue-extension)
+(deny iokit-open-user-client
+	(require-not (iokit-user-client-class "IOHIDLibUserClient")))
+(deny iokit-set-properties)
+(deny job-creation)
+(deny mach-issue-extension)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.triald.namespace-management"))
+		(require-not (global-name "com.apple.system.libinfo.muser"))
+		(global-name "com.apple.logd.events")
+		(global-name "com.apple.logd")
+		(global-name "com.apple.diagnosticd")
+		(global-name "com.apple.diagd")
+		(global-name "com.apple.cfprefsd.daemon.system")))
+(deny process-exec*)
+(deny process-exec-interpreter)
+(deny system-kas-info)
+(deny storage-class-map)

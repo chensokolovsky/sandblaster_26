@@ -1,0 +1,10 @@
+(version 1)
+(allow default)
+(deny file-ioctl
+	(literal "/dev/pfm"))
+(deny file-read*
+	(require-not (literal "/dev/pfm")))
+(deny file-write-setugid)
+(deny job-creation)
+(deny system-kas-info)
+(deny storage-class-map)

@@ -1,0 +1,15 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-not (subpath "/private/var/db/datadetectors")))
+(deny file-write*
+	(subpath "/private/var/db/datadetectors"))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny system-kas-info)
+(deny storage-class-map)

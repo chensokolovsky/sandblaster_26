@@ -1,0 +1,106 @@
+(version 1)
+(allow default)
+(deny file-issue-extension
+	(require-all
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.gputoolsd")
+		(extension-class "com.apple.app-sandbox.read-write")
+		(extension-class "com.apple.app-sandbox.read")
+		(extension-class "com.apple.mediaserverd.read-write")
+		(extension-class "com.apple.aned.read-only")
+		(extension-class "com.apple.mediaserverd.read")))
+(deny file-read*
+	(require-all
+		(vnode-type REGULAR-FILE)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.gputoolsd")))
+	(require-all
+		(require-not (literal "/private/var/preferences/com.apple.security.plist"))
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.gputoolsd")))
+	(require-all
+		(vnode-type DIRECTORY)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.gputoolsd"))))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.gputoolsd"))
+		(require-not (literal-prefix "${HOME}/Library/Caches"))))
+(deny file-write*
+	(require-all
+		(vnode-type REGULAR-FILE)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.gputoolsd")))
+	(require-all
+		(vnode-type DIRECTORY)
+		(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.gputoolsd")))
+	(require-all
+		(require-all (require-not (subpath "/private/var/root/Library/Caches/com.apple.opengl"))
+(require-not (subpath-prefix "${FRONT_USER_HOME}/Library/GPUTools")))
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.gputoolsd")))
+(deny file-write-create
+	(require-all
+		(vnode-type DIRECTORY)
+		(require-not (literal-prefix "${HOME}/Library/Caches"))
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.gputoolsd")
+		(require-any (subpath "/private/var/root/Library/Caches/com.apple.opengl")
+(subpath-prefix "${FRONT_USER_HOME}/Library/GPUTools"))
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.gputoolsd")))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny iokit-open-user-client
+	(require-not (iokit-user-client-class "IOSurfaceRootUserClient")))
+(deny ipc-posix-shm*
+	(ipc-posix-name "gdt-"))
+(deny ipc-posix-shm-read-data
+	(require-all
+		(ipc-posix-name "apple.shm.notification_center")
+		(entitlement-is-bool-true com.apple.security.on-demand-install-capable)))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.usernotifications.remotenotificationservice"))
+		(require-all (require-not (global-name "com.apple.cvmsServ"))
+(require-not (global-name "com.apple.gpumemd.source")))
+		(require-not (global-name "com.apple.springboard.backgroundappservices"))
+		(require-not (global-name "com.apple.springboard.services"))
+		(require-not (global-name "com.apple.usernotifications.usernotificationservice"))
+		(require-not (global-name "com.apple.springboard.icongeneration"))
+		(require-not (global-name "com.apple.coresymbolicationd"))
+		(require-not (xpc-service-name "com.apple.MTLCompilerService"))
+		(require-not (global-name "com.apple.usernotifications.listener"))
+		(require-not (xpc-service-name "com.apple.AGXCompilerService"))
+		(require-not (global-name "com.apple.mobile.heartbeat"))
+		(global-name "com.apple.securityd")
+		(extension com.apple.security.exception.mach-lookup.global-name)
+		(extension com.apple.security.exception.mach-lookup.local-name)
+		(global-name "com.apple.trustd")
+		(require-any
+			(require-all
+				(global-name "com.apple.system.notification_center")
+				(entitlement-is-bool-true com.apple.security.on-demand-install-capable)
+				(require-any
+					(xpc-service-name-regex #".+")
+					(xpc-service-name "com.apple.WebKit.")
+					(xpc-service-name "com.apple.CoreGraphics.CGPDFService")))
+			(require-all
+				(global-name "com.apple.lsd.openurl")
+				(global-name "com.apple.tccd")
+				(global-name "com.apple.lsd.advertisingidentifiers")
+				(xpc-service-name-regex #".+")))))
+(deny network-outbound
+	(require-all
+		(require-not (control-name "com.apple.flow-divert"))
+		(require-not (literal "/private/var/run/gputoolsdhelper.sock"))
+		(require-not (local tcp "localhost:*"))
+		(literal "/private/var/run/lockdown/checkin")))
+(deny process-exec*
+	(require-any (literal "/Developer/usr/libexec/gputoolsd")
+(literal "/System/Developer/usr/libexec/gputoolsd")))
+(deny syscall-unix
+	(c1 29e1 484c 9ce0))
+(deny system-kas-info)
+(deny user-preference-read
+	(preference-domain "com.apple.opengl"))
+(deny storage-class-map)

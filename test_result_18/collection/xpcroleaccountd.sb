@@ -1,0 +1,17 @@
+(version 1)
+(allow default)
+(deny file-read*
+	(require-all
+		(require-not (subpath "/private/var/preferences/FeatureFlags"))
+		(require-not (subpath "/private/var/db/com.apple.xpc.roleaccountd.staging"))))
+(deny file-write*
+	(subpath "/private/var/db/com.apple.xpc.roleaccountd.staging"))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny system-kas-info)
+(deny storage-class-map)

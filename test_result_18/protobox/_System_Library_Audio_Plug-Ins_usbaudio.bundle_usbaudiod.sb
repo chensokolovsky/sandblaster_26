@@ -1,0 +1,23 @@
+(version 1)
+(allow default)
+(deny generic-issue-extension)
+(deny iokit-issue-extension)
+(deny iokit-open-user-client
+	(require-all (require-not (iokit-user-client-class "AppleUSBHostFrameworkDeviceClient"))
+(require-not (iokit-user-client-class "AppleUSBHostFrameworkInterfaceClient"))))
+(deny iokit-set-properties)
+(deny job-creation)
+(deny mach-issue-extension)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.diagnosticd"))
+		(require-not (global-name "com.apple.logd.events"))
+		(require-not (global-name "com.apple.cfprefsd.daemon"))
+		(require-not (global-name "com.apple.audio.driver-registrar"))
+		(require-not (global-name "com.apple.logd"))
+		(require-not (global-name "com.apple.cfprefsd.daemon.system"))
+		(global-name "com.apple.analyticsd")))
+(deny process-exec*)
+(deny process-exec-interpreter)
+(deny system-kas-info)
+(deny storage-class-map)

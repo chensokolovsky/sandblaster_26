@@ -1,0 +1,390 @@
+(version 1)
+(allow default)
+(deny file-issue-extension
+	(require-all
+		(extension-class "com.apple.app-sandbox.read-write")
+		(require-all (require-not (subpath "/private/var/tmp/com.apple.akd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.akd"))
+(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.akd")))
+		(require-not (extension com.apple.sandbox.container))
+		(require-not (subpath-prefix "${HOME}/Library/HTTPStorages/com.apple.akd")))
+	(require-all
+		(extension-class "com.apple.app-sandbox.read")
+		(require-all (require-not (subpath "/private/var/tmp/com.apple.akd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.akd"))
+(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.akd")))
+		(require-not (extension com.apple.sandbox.container))
+		(require-not (subpath-prefix "${HOME}/Library/HTTPStorages/com.apple.akd")))
+	(require-all
+		(extension-class "com.apple.mediaserverd.read-write")
+		(require-all (require-not (subpath "/private/var/tmp/com.apple.akd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.akd"))
+(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.akd")))
+		(require-not (extension com.apple.sandbox.container))
+		(require-not (subpath-prefix "${HOME}/Library/HTTPStorages/com.apple.akd")))
+	(require-all
+		(extension-class "com.apple.aned.read-only")
+		(require-all (require-not (subpath "/private/var/tmp/com.apple.akd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.akd"))
+(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.akd")))
+		(require-not (extension com.apple.sandbox.container))
+		(require-not (subpath-prefix "${HOME}/Library/HTTPStorages/com.apple.akd")))
+	(require-all
+		(extension-class "com.apple.mediaserverd.read")
+		(require-all (require-not (subpath "/private/var/tmp/com.apple.akd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.akd"))
+(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.akd")))
+		(require-not (extension com.apple.sandbox.container))
+		(require-not (subpath-prefix "${HOME}/Library/HTTPStorages/com.apple.akd")))
+	(require-all
+		(extension-class "com.apple.nsurlsessiond.readonly")
+		(extension com.apple.sandbox.executable))
+	(require-all
+		(extension-class "com.apple.quicklook.readonly")
+		(require-not (extension com.apple.sandbox.container))
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.akd")
+		(require-not (extension-class "com.apple.mediaserverd.read-write"))
+		(extension-class "com.apple.mediaserverd.read"))
+	(require-all
+		(extension-class "com.apple.mediaserverd.read-write")
+		(require-not (extension com.apple.sandbox.container))
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.akd")
+		(require-not (extension-class "com.apple.mediaserverd.read-write"))
+		(extension-class "com.apple.mediaserverd.read"))
+	(require-all
+		(extension-class "com.apple.mediaserverd.read")
+		(require-not (extension com.apple.sandbox.container))
+		(subpath-prefix "${HOME}/Library/Caches/com.apple.akd")
+		(require-not (extension-class "com.apple.mediaserverd.read-write"))
+		(extension-class "com.apple.mediaserverd.read")))
+(deny file-read*
+	(require-all
+		(require-not (literal "/private/var/preferences/com.apple.networkd.plist"))
+		(require-not (subpath "/private/var/containers/Bundle"))
+		(require-all (require-not (subpath "/AppleInternal/Applications"))
+(require-not (subpath "/System/Developer/Applications"))
+(require-not (subpath "/private/var/personalized_debug/Applications"))
+(require-not (subpath "/private/var/personalized_automation/Applications"))
+(require-not (regex #"/private/var/personalized_factory/[UNSUPPORTED]+/Applications/?"))
+(require-not (regex #"/private/var/factory_mount/[UNSUPPORTED]+/Applications/?")))
+		(require-not (literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/EffectiveUserSettings.plist"))
+		(require-not (literal "/private/var/Managed Preferences/mobile/com.apple.SystemConfiguration.plist"))
+		(require-not (subpath "/Developer/Applications"))
+		(require-not (literal "/private/var/preferences/com.apple.security.plist"))
+		(require-not (subpath-prefix "${FRONT_USER_HOME}/Containers/Bundle"))
+		(require-all (require-not (subpath-prefix "${HOME}/Library/Application Support"))
+(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/SystemData/com.apple.akd/?")))
+		(require-not (literal "/private/var/db/com.apple.networkextension.tracker-info"))
+		(require-not (literal "/private/var/preferences/com.apple.NetworkStatistics.plist"))
+		(require-not (literal-prefix "${FRONT_USER_HOME}/Library/ConfigurationProfiles/EffectiveUserSettings.plist"))
+		(require-not (subpath "/Applications"))
+		(require-not (literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.nsurlstoragedresources/Library/dafsaData.bin"))
+		(require-not (subpath-prefix "${HOME}/Library/HTTPStorages/com.apple.akd"))
+		(require-not (literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/EffectiveUserSettings.plist"))
+		(require-any
+			(literal-prefix "${ANY_USER_HOME}/Library/Caches/GeoServices/tguid.bin")
+			(require-all
+				(literal "/private/var/")
+				(require-any
+					(require-all
+						(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$")
+						(require-all (require-not (subpath-prefix "${HOME}"))
+(require-not (subpath-prefix "${FRONT_USER_HOME}"))))
+					(require-all
+						(literal "/private/var/preferences/com.apple.networkextension.uuidcache.plist")
+						(require-not (process-attribute is-apple-signed-executable)))
+					(require-all
+						(entitlement-is-present com.apple.private.networkextension.configuration)
+						(require-not (literal "/private/var/preferences/com.apple.networkextension.plist")))))
+			(require-all
+				(literal "/private/var/")
+				(regex #"^/private/var/mobile/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices$" #"^/private/var/mobile/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices/" #"^/private/var/euser[0-9]+/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices$" #"^/private/var/euser[0-9]+/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices/" #"^/private/var/[-0-9A-F]+/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices$" #"^/private/var/[-0-9A-F]+/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices/" #"^/private/var/Users/[^/]+/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices$" #"^/private/var/Users/[^/]+/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices/")
+				(require-not (subpath-prefix "${FRONT_USER_HOME}"))
+				(require-any
+					(require-all
+						(vnode-type REGULAR-FILE)
+						(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.akd")))
+					(require-all
+						(vnode-type DIRECTORY)
+						(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.akd")))
+					(require-all
+						(require-not (subpath "/private/var/containers/Data/System/com.apple.geod"))
+						(require-all (require-not (subpath "/private/var/tmp/com.apple.akd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.akd"))
+(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.akd")))
+						(require-not (extension com.apple.sandbox.container)))))
+			(require-all
+				(require-not (subpath-prefix "${FRONT_USER_HOME}/Library/Caches/GeoServices"))
+				(require-any
+					(require-all
+						(vnode-type REGULAR-FILE)
+						(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.akd")))
+					(require-all
+						(vnode-type DIRECTORY)
+						(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.akd")))
+					(require-all
+						(require-not (subpath "/private/var/containers/Data/System/com.apple.geod"))
+						(require-all (require-not (subpath "/private/var/tmp/com.apple.akd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.akd"))
+(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.akd")))
+						(require-not (extension com.apple.sandbox.container))))))))
+(deny file-read-metadata
+	(require-all
+		(require-not (literal-prefix "${HOME}/Library/HTTPStorages"))
+		(require-all (require-not (subpath "/private/var/tmp/com.apple.akd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.akd"))
+(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.akd")))
+		(require-not (literal-prefix "${HOME}/Library/PPTDevice"))
+		(require-not (literal-prefix "${HOME}"))
+		(require-not (literal-prefix "${HOME}/Library/Caches"))
+		(require-not (literal-prefix "${HOME}/Library/Preferences"))
+		(require-not (extension com.apple.sandbox.container))
+		(require-not (subpath-prefix "${HOME}/Library/HTTPStorages/com.apple.akd"))
+		(process-attribute is-apple-signed-executable)
+		(require-not (literal-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry"))
+		(require-any
+			(require-all
+				(literal "/private/var/")
+				(regex #"^/private/var/mobile/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/euser[0-9]+/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/[-0-9A-F]+/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/Users/[^/]+/Library/DeviceRegistry/[-0-9A-Z]+$")
+				(require-not (subpath-prefix "${FRONT_USER_HOME}"))
+				(subpath "/private/var/containers/Bundle"))
+			(require-all
+				(require-any (subpath "/AppleInternal/Applications")
+(subpath "/System/Developer/Applications")
+(subpath "/private/var/personalized_debug/Applications")
+(subpath "/private/var/personalized_automation/Applications")
+(regex #"/private/var/personalized_factory/[UNSUPPORTED]+/Applications/?")
+(regex #"/private/var/factory_mount/[UNSUPPORTED]+/Applications/?"))
+				(literal-prefix "${FRONT_USER_HOME}/Library/UserConfigurationProfiles/EffectiveUserSettings.plist")
+				(literal "/private/var/Managed Preferences/mobile/com.apple.SystemConfiguration.plist")
+				(subpath "/Developer/Applications")
+				(literal "/private/var/preferences/com.apple.security.plist")
+				(subpath-prefix "${FRONT_USER_HOME}/Containers/Bundle")
+				(require-any (subpath-prefix "${HOME}/Library/Application Support")
+(regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/SystemData/com.apple.akd/?"))
+				(literal "/private/var/db/com.apple.networkextension.tracker-info")
+				(literal "/private/var/preferences/com.apple.NetworkStatistics.plist")
+				(literal-prefix "${FRONT_USER_HOME}/Library/ConfigurationProfiles/EffectiveUserSettings.plist")
+				(subpath "/Applications")
+				(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.nsurlstoragedresources/Library/dafsaData.bin")
+				(subpath-prefix "${HOME}/Library/HTTPStorages/com.apple.akd")
+				(literal "/private/var/containers/Shared/SystemGroup/systemgroup.com.apple.configurationprofiles/Library/ConfigurationProfiles/EffectiveUserSettings.plist")
+				(require-any
+					(literal-prefix "${ANY_USER_HOME}/Library/Caches/GeoServices/tguid.bin")
+					(require-all
+						(literal "/private/var/")
+						(require-any
+							(require-all
+								(regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$")
+								(require-any (subpath-prefix "${HOME}")
+(subpath-prefix "${FRONT_USER_HOME}")))
+							(require-all
+								(literal "/private/var/preferences/com.apple.networkextension.uuidcache.plist")
+								(process-attribute is-apple-signed-executable))
+							(require-all
+								(entitlement-is-present com.apple.private.networkextension.configuration)
+								(literal "/private/var/preferences/com.apple.networkextension.plist"))))
+					(require-all
+						(literal "/private/var/")
+						(regex #"^/private/var/mobile/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices$" #"^/private/var/mobile/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices/" #"^/private/var/euser[0-9]+/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices$" #"^/private/var/euser[0-9]+/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices/" #"^/private/var/[-0-9A-F]+/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices$" #"^/private/var/[-0-9A-F]+/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices/" #"^/private/var/Users/[^/]+/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices$" #"^/private/var/Users/[^/]+/Library/DeviceRegistry/[-0-9A-Z]+/GeoServices/")
+						(subpath-prefix "${FRONT_USER_HOME}")
+						(require-any
+							(require-all
+								(vnode-type REGULAR-FILE)
+								(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.akd"))
+							(require-all
+								(vnode-type DIRECTORY)
+								(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.akd"))
+							(require-all
+								(subpath "/private/var/containers/Data/System/com.apple.geod")
+								(require-any (subpath "/private/var/tmp/com.apple.akd")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.akd")
+(subpath-prefix "${HOME}/Library/Caches/com.apple.akd"))
+								(extension com.apple.sandbox.container))))
+					(require-all
+						(subpath-prefix "${FRONT_USER_HOME}/Library/Caches/GeoServices")
+						(require-any
+							(require-all
+								(vnode-type REGULAR-FILE)
+								(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.akd"))
+							(require-all
+								(vnode-type DIRECTORY)
+								(subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.akd"))
+							(require-all
+								(subpath "/private/var/containers/Data/System/com.apple.geod")
+								(require-any (subpath "/private/var/tmp/com.apple.akd")
+(subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.akd")
+(subpath-prefix "${HOME}/Library/Caches/com.apple.akd"))
+								(extension com.apple.sandbox.container)))))))))
+(deny file-write*
+	(require-all
+		(require-all (require-not (subpath-prefix "${HOME}/Library/Application Support"))
+(require-not (regex #"/private/var/PersonaVolumes/[UNSUPPORTED]+/Containers/Data/[UNSUPPORTED]+/[UNSUPPORTED]+/SystemData/com.apple.akd/?")))
+		(require-any
+			(require-all
+				(literal "/private/var/")
+				(require-any
+					(literal-prefix "${ANY_USER_HOME}/Library/Caches/GeoServices/tguid.bin")
+					(require-all (require-not (subpath "/private/var/tmp/com.apple.akd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.akd"))
+(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.akd")))
+					(require-all
+						(require-any (subpath-prefix "${HOME}")
+(subpath-prefix "${FRONT_USER_HOME}"))
+						(require-not (regex #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/mobile/Containers/Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/mobile/Containers/Temp/Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/euser[0-9]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/[-0-9A-F]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd/" #"^/private/var/Users/[^/]+/Containers/(Temp/)?Data/[^/]+/[^/]+/SystemData/com[.]apple[.]akd$")))
+					(require-all
+						(vnode-type REGULAR-FILE)
+						(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.akd")))
+					(require-all
+						(vnode-type DIRECTORY)
+						(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.akd")))))
+			(require-all
+				(require-not (subpath-prefix "${HOME}/Library/HTTPStorages/com.apple.akd"))
+				(require-any
+					(require-all (require-not (subpath "/private/var/tmp/com.apple.akd"))
+(require-not (subpath-prefix "${PROCESS_TEMP_DIR}/com.apple.akd"))
+(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.akd")))
+					(literal-prefix "${ANY_USER_HOME}/Library/Caches/GeoServices/tguid.bin")
+					(require-all
+						(vnode-type REGULAR-FILE)
+						(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.akd")))
+					(require-all
+						(vnode-type DIRECTORY)
+						(require-not (subpath-prefix "${HOME}/Library/Caches/com.apple.nsurlsessiond/Downloads/com.apple.akd"))))))))
+(deny file-write-create
+	(literal-prefix "${HOME}/Library/Logs/CrashReporter/CFNetwork_")
+	(require-all
+		(process-attribute is-apple-signed-executable)
+		(vnode-type DIRECTORY)
+		(require-not (literal-prefix "${FRONT_USER_HOME}/Library/DeviceRegistry"))
+		(literal "/private/var/")
+		(regex #"^/private/var/mobile/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/euser[0-9]+/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/[-0-9A-F]+/Library/DeviceRegistry/[-0-9A-Z]+$" #"^/private/var/Users/[^/]+/Library/DeviceRegistry/[-0-9A-Z]+$")
+		(require-not (subpath-prefix "${FRONT_USER_HOME}")))
+	(require-all
+		(vnode-type DIRECTORY)
+		(require-not (literal-prefix "${HOME}/Library/HTTPStorages"))
+		(require-not (literal-prefix "${HOME}/Library/Caches"))))
+(deny file-write-setugid)
+(deny file-write-unlink
+	(entitlement-is-present com.apple.private.oop-jit.loader)
+	(require-all
+		(extension com.apple.sandbox.oopjit)
+		(require-not (subpath "/private/var/OOPJit"))))
+(deny job-creation)
+(deny mach-lookup
+	(require-all
+		(require-not (global-name "com.apple.securityd"))
+		(require-not (global-name "com.apple.SystemConfiguration.DNSConfiguration"))
+		(require-not (global-name "com.apple.networkscored"))
+		(require-not (global-name "com.apple.fairplayd.versioned"))
+		(require-all (require-not (global-name "com.apple.adid.xpc"))
+(require-not (global-name "com.apple.Carousel.authAlertXPCService")))
+		(require-not (global-name "com.apple.SystemConfiguration.NetworkInformation"))
+		(require-not (global-name "com.apple.powerlog.plxpclogger.xpc"))
+		(require-not (global-name "com.apple.SystemConfiguration.helper"))
+		(require-not (global-name "com.apple.usernotifications.remotenotificationservice"))
+		(require-not (global-name "com.apple.commcenter.xpc"))
+		(require-not (global-name "com.apple.cdp.daemon"))
+		(require-not (global-name "com.apple.coreidvd.proofing"))
+		(require-not (global-name "com.apple.SystemConfiguration.configd"))
+		(require-not (global-name "com.apple.accountsd.accountmanager"))
+		(require-not (global-name "com.apple.SharingServices"))
+		(require-not (global-name "com.apple.GSSCred"))
+		(require-not (global-name "com.apple.mobile.keybagd.xpc"))
+		(require-not (global-name "com.apple.cfnetwork.cfnetworkagent"))
+		(require-not (global-name "com.apple.apsd"))
+		(require-not (global-name "com.apple.SBUserNotification"))
+		(require-not (global-name "com.apple.nehelper"))
+		(require-not (global-name "com.apple.nesessionmanager"))
+		(require-not (global-name "com.apple.SharedWebCredentials"))
+		(require-not (global-name "com.apple.networkserviceproxy.fetch-token"))
+		(require-not (global-name "com.apple.springboard.backgroundappservices"))
+		(require-not (global-name "com.apple.dnssd.service"))
+		(require-not (global-name "com.apple.mobile.usermanagerd.xpc"))
+		(require-not (global-name "com.apple.iconservices"))
+		(require-not (global-name "com.apple.marco"))
+		(require-not (global-name "com.apple.geoanalyticsd"))
+		(require-not (global-name "com.apple.usymptomsd"))
+		(require-not (global-name "com.apple.trustd"))
+		(require-not (global-name "com.apple.springboard.services"))
+		(require-not (global-name "com.apple.SystemConfiguration.PPPController"))
+		(require-not (global-name "com.apple.commcenter.cupolicy.xpc"))
+		(require-not (global-name "com.apple.usernotifications.usernotificationservice"))
+		(require-not (global-name "com.apple.nsurlsessiond"))
+		(require-not (global-name "com.apple.awdd"))
+		(require-not (global-name "com.apple.symptomsd"))
+		(require-not (global-name "com.apple.AppSSO.service-xpc"))
+		(require-not (global-name "com.apple.symptoms.symptomsd.managed_events"))
+		(require-all (require-not (global-name "com.apple.geod"))
+(require-not (global-name "com.apple.nanomaps.xpc.GeoServices")))
+		(require-not (global-name "com.apple.iokit.powerdxpc"))
+		(require-not (global-name "com.apple.corefollowup.agent"))
+		(require-not (global-name "com.apple.pairedsyncd.syncstate"))
+		(require-not (global-name "com.apple.PowerManagement.control"))
+		(require-not (global-name "com.apple.identityservicesd.embedded.auth"))
+		(require-not (global-name "com.apple.ak.anisette.xpc"))
+		(require-not (global-name "com.apple.security.octagon"))
+		(require-not (global-name "com.apple.networkd"))
+		(require-not (global-name "com.apple.cfnetwork.AuthBrokerAgent"))
+		(require-not (global-name "com.apple.SystemConfiguration.SCNetworkReachability"))
+		(require-not (global-name "com.apple.nano.nanoregistry.paireddeviceregistry"))
+		(require-not (global-name "com.apple.nesessionmanager.content-filter"))
+		(require-not (global-name "com.apple.commcenter.coretelephony.xpc"))
+		(require-not (global-name "com.apple.usernotifications.listener"))
+		(require-not (global-name "com.apple.frontboard.systemappservices"))
+		(global-name "com.apple.lsd.openurl")
+		(global-name "com.apple.tccd")
+		(global-name "com.apple.lsd.advertisingidentifiers")
+		(extension com.apple.security.exception.mach-lookup.global-name)
+		(extension com.apple.security.exception.mach-lookup.local-name)
+		(require-any
+			(xpc-service-name "com.apple.WebKit.")
+			(xpc-service-name "com.apple.CoreGraphics.CGPDFService")
+			(xpc-service-name-regex #".+")
+			(require-all
+				(global-name "com.apple.ak.auth.xpc")
+				(process-attribute is-apple-signed-executable)
+				(entitlement-is-bool-true com.apple.authkit.client)
+				(entitlement-is-bool-true com.apple.authkit.client.private)
+				(entitlement-is-bool-true com.apple.authkit.client.internal))
+			(require-all
+				(global-name "com.apple.networkd_privileged")
+				(entitlement-is-bool-true com.apple.networkd.modify_settings)
+				(entitlement-is-bool-true com.apple.networkd.disable_opportunistic)
+				(entitlement-is-bool-true com.apple.networkd.advisory_socket)
+				(entitlement-is-bool-true com.apple.networkd_privileged)
+				(entitlement-is-bool-true com.apple.networkd.persistent_interface))
+			(require-all
+				(global-name "com.apple.system.notification_center")
+				(entitlement-is-bool-true com.apple.security.on-demand-install-capable)))))
+(deny syscall-unix
+	(c1 1523 8338 9ce0))
+(deny system-kas-info)
+(deny user-preference-read
+	(require-all
+		(require-not (preference-domain "com.apple.nanobuddy"))
+		(require-not (preference-domain "com.apple.AppSupport"))
+		(require-not (preference-domain "com.apple.logging"))
+		(require-not (preference-domain "com.apple.WebUI"))
+		(require-not (preference-domain "com.apple.storeservices.itfe"))
+		(require-not (preference-domain "com.apple.CFNetwork"))
+		(require-not (preference-domain "kCFPreferencesAnyApplication"))
+		(require-not (preference-domain "com.apple.itunesstored"))
+		(require-not (preference-domain "com.apple.demo-settings"))
+		(require-not (preference-domain "com.apple.akd"))
+		(require-not (preference-domain "com.apple.purplebuddy.notbackedup"))
+		(require-not (preference-domain "com.apple.NanoRegistry"))
+		(require-not (preference-domain "com.apple.nsurlcache"))
+		(require-not (preference-domain "com.apple.persistentconnection"))
+		(require-not (preference-domain "com.apple.ids"))
+		(require-not (preference-domain "com.apple.purplebuddy"))
+		(require-not (preference-domain "com.apple.conference"))
+		(require-not (preference-domain "com.apple.pairedsync"))
+		(require-not (preference-domain "com.apple.marco"))
+		(preference-domain "com.apple.GEO")))
+(deny user-preference-write
+	(require-all
+		(require-not (preference-domain "kCFPreferencesAnyApplication"))
+		(require-not (preference-domain "com.apple.akd"))
+		(preference-domain "com.apple.purplebuddy.notbackedup")))
+(deny storage-class-map)

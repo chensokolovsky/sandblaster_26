@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
 
         {
             "name": "ios17 platform",
@@ -14,6 +15,17 @@
             "python": "/opt/homebrew/bin/python3",
             "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
             "args": ["-r", "17", "-o", "../../ios17/operations.txt", "-d", "../test_result_17/platform", "../../ios17/platform.bin"]
+        },
+
+        {
+            "name": "ios18 platform",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/reverse_sandbox.py",
+            "console": "integratedTerminal",
+            "python": "/opt/homebrew/bin/python3",
+            "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
+            "args": ["-r", "26", "-o", "../../ios18/operations.txt", "-d", "../test_result_18/platform", "../../ios18/platform.bin"]
         },
 
         {
@@ -36,6 +48,16 @@
             "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
             "args": ["-r", "17", "-o", "../../ios17/operations.txt", "-d", "../test_result_17/protobox", "../../ios17/protobox.bin"]
         },
+        {
+            "name": "ios18 protobox",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/reverse_sandbox.py",
+            "console": "integratedTerminal",
+            "python": "/opt/homebrew/bin/python3",
+            "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
+            "args": ["-r", "26", "-o", "../../ios18/operations.txt", "-d", "../test_result_18/protobox", "../../ios18/protobox.bin"]
+        },
          {
             "name": "ios26 protobox",
             "type": "debugpy",
@@ -55,6 +77,16 @@
             "python": "/opt/homebrew/bin/python3",
             "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
             "args": ["-r", "17", "-o", "../../ios17/operations.txt", "-d", "../test_result_17/collection", "../../ios17/collection.bin"]
+        },
+        {
+            "name": "ios18 collection",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/reverse_sandbox.py",
+            "console": "integratedTerminal",
+            "python": "/opt/homebrew/bin/python3",
+            "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
+            "args": ["-r", "26", "-o", "../../ios18/operations.txt", "-d", "../test_result_18/collection", "../../ios18/collection.bin"]
         },
          {
             "name": "ios26 collection",
