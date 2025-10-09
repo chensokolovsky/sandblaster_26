@@ -25,7 +25,7 @@
             "console": "integratedTerminal",
             "python": "/opt/homebrew/bin/python3",
             "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
-            "args": ["-r", "26", "-o", "../../ios18/operations.txt", "-d", "../test_result_18/platform", "../../ios18/platform.bin"]
+            "args": ["-r", "18", "-o", "../../ios18/operations.txt", "-d", "../test_result_18/platform", "../../ios18/platform.bin"]
         },
 
         {
@@ -37,6 +37,26 @@
             "python": "/opt/homebrew/bin/python3",
             "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
             "args": ["-r", "26", "-o", "../../ios26beta/operations.txt", "-d", "../test_result_26/platform", "../../ios26beta/platform.bin"]
+        },
+        {
+            "name": "ios26.0 platform",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/reverse_sandbox.py",
+            "console": "integratedTerminal",
+            "python": "/opt/homebrew/bin/python3",
+            "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
+            "args": ["-r", "26", "-o", "../../ios26.0/operations.txt", "-d", "../test_result_26.0/platform", "../../ios26.0/platform.bin"]
+        },
+        {
+            "name": "ios26.0.1 platform",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/reverse_sandbox.py",
+            "console": "integratedTerminal",
+            "python": "/opt/homebrew/bin/python3",
+            "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
+            "args": ["-r", "26", "-o", "../../ios26.0.1/operations.txt", "-d", "../test_result_26.0.1/platform", "../../ios26.0.1/platform.bin"]
         },
         {
             "name": "ios17 protobox",
@@ -56,7 +76,7 @@
             "console": "integratedTerminal",
             "python": "/opt/homebrew/bin/python3",
             "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
-            "args": ["-r", "26", "-o", "../../ios18/operations.txt", "-d", "../test_result_18/protobox", "../../ios18/protobox.bin"]
+            "args": ["-r", "18", "-o", "../../ios18/operations.txt", "-d", "../test_result_18/protobox", "../../ios18/protobox.bin"]
         },
          {
             "name": "ios26 protobox",
@@ -67,6 +87,26 @@
             "python": "/opt/homebrew/bin/python3",
             "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
             "args": ["-r", "26", "-o", "../../ios26beta/operations.txt", "-d", "../test_result_26/protobox", "../../ios26beta/protobox.bin"]
+        },
+        {
+            "name": "ios26.0 protobox",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/reverse_sandbox.py",
+            "console": "integratedTerminal",
+            "python": "/opt/homebrew/bin/python3",
+            "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
+            "args": ["-r", "26", "-o", "../../ios26.0/operations.txt", "-d", "../test_result_26.0/protobox", "../../ios26.0/protobox.bin"]
+        },
+        {
+            "name": "ios26.0.1 protobox",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/reverse_sandbox.py",
+            "console": "integratedTerminal",
+            "python": "/opt/homebrew/bin/python3",
+            "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
+            "args": ["-r", "26", "-o", "../../ios26.0.1/operations.txt", "-d", "../test_result_26.0.1/protobox", "../../ios26.0.1/protobox.bin"]
         },
          {
             "name": "ios17 collection",
@@ -86,7 +126,7 @@
             "console": "integratedTerminal",
             "python": "/opt/homebrew/bin/python3",
             "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
-            "args": ["-r", "26", "-o", "../../ios18/operations.txt", "-d", "../test_result_18/collection", "../../ios18/collection.bin"]
+            "args": ["-r", "18", "-o", "../../ios18/operations.txt", "-d", "../test_result_18/collection", "../../ios18/collection.bin"]
         },
          {
             "name": "ios26 collection",
@@ -97,6 +137,26 @@
             "python": "/opt/homebrew/bin/python3",
             "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
             "args": ["-r", "26", "-o", "../../ios26beta/operations.txt", "-d", "../test_result_26/collection", "../../ios26beta/collection.bin"]
+        },
+        {
+            "name": "ios26.0 collection",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/reverse_sandbox.py",
+            "console": "integratedTerminal",
+            "python": "/opt/homebrew/bin/python3",
+            "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
+            "args": ["-r", "26", "-o", "../../ios26.0/operations.txt", "-d", "../test_result_26.0/collection", "../../ios26.0/collection.bin"]
+        },
+        {
+            "name": "ios26.0.1 collection",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/reverse_sandbox.py",
+            "console": "integratedTerminal",
+            "python": "/opt/homebrew/bin/python3",
+            "cwd": "/Users/chenshalev/workspace/projects/8ksec/sandboxProfiles/sandblaster_26/reverse-sandbox/",   
+            "args": ["-r", "26", "-o", "../../ios26.0.1/operations.txt", "-d", "../test_result_26.0.1/collection", "../../ios26.0.1/collection.bin"]
         }
     ]
 }
