@@ -1,8 +1,0 @@
-(version 1)
-(allow default)
-(deny file-write-setugid)
-(deny job-creation)
-(deny syscall-unix
-	(c1 2ff5 81b1 9ce0))
-(deny system-kas-info)
-(deny storage-class-map)
