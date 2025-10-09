@@ -56,22 +56,26 @@ class SandboxData():
 
         # offsets
         header_addition = 0
-        if release == 26:
+        if release > 17:
             header_addition = 2
         self.regex_table_offset = self.header_size + header_addition
         self.vars_offset = self.regex_table_offset + (self.regex_count * INDEX_SIZE)
+        ent_size = INDEX_SIZE
+
         self.states_offset = self.vars_offset + (self.vars_count * INDEX_SIZE)
         self.entitlements_offset = self.states_offset + (self.states_count * INDEX_SIZE)
 
         self.profiles_offset = self.entitlements_offset + (self.entitlements_count * INDEX_SIZE)
         profile_ops_offset_size = PROFILE_OPS_OFFSET
-        if release == 26:
+        if release > 17:
             profile_ops_offset_size = 8
         
         ### another patch
-        if release == 26:
+        if release > 17:
             if entitlements_count > 0:
                 self.profiles_offset += 72
+                if release > 18:
+                    self.profiles_offset += 4
         self.profiles_end_offset = self.profiles_offset + (self.num_profiles * (self.sb_ops_count * INDEX_SIZE + profile_ops_offset_size))
         self.operation_nodes_size = self.op_nodes_count * OPERATION_NODE_SIZE
         self.operation_nodes_offset = self.profiles_end_offset
@@ -160,7 +164,7 @@ def parse_profile(infile, args) -> SandboxData:
 
 
     sandbox_data = None
-    if int(args.release) < 26:
+    if int(args.release) == 17:
         sandbox_data = SandboxData(
             int(args.release), ios16_5_struct.size, header, op_nodes_count, sb_ops_count, vars_count,
             states_count, num_profiles, re_count, entitlements_count, instructions_count)
@@ -344,10 +348,7 @@ def parse_regex_list(infile, sandbox_data):
         re_offsets_table = struct.unpack("<%dH" % sandbox_data.regex_count, infile.read(2 * sandbox_data.regex_count))
 
         offset_addition = 0
-        ## Patch for collection
-        #if sandbox_data.release == 26:
-        #    offset_addition += 72
-        
+      
         for offset in re_offsets_table:
             infile.seek(offset * 8 + sandbox_data.base_addr + offset_addition)
             re_length = struct.unpack("<H", infile.read(2))[0]
@@ -426,11 +427,11 @@ def main():
         logger.info("using profile bundle")
 
         profile_size = (sandbox_data.sb_ops_count * 2) + 2 + 2 # + name + policy index
-        if int(args.release) == 26:
+        if int(args.release) > 17:
             profile_size += 4
 
         profile_ops_offset_size = PROFILE_OPS_OFFSET
-        if int(args.release) == 26:
+        if int(args.release) > 17:
             profile_ops_offset_size += 4
 
         # read profiles
