@@ -1,6 +1,10 @@
 # SandBlaster: Reversing the Apple Sandbox
 
 
+## iOS 26 Support
+See ios26_support branch.
+Original readme:
+
 ## Cellebrite Fork
 
 This fork was updated to work on iOS 16.5 and iOS 17 beta.
