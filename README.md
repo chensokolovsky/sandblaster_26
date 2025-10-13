@@ -9,6 +9,9 @@ Example:
 $ python3 reverse-sandbox/reverse_sandbox.py -r 26 -o ../ios_26_operations.txt -d ../results_ios26/platform ../ios26/platform.bin
 ```
 
+Tested up to ios 26.0.1
+
+
 Original readme:
 
 ## Cellebrite Fork
