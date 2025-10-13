@@ -2,8 +2,8 @@
 
 
 ## iOS 26 Support
-See <a href="https://chensokolovsky.github.io/FuzzerAmoreBlog/posts/ios_sandbox_profiles.html">blog post</a>
-Obtain the needed files. Use ```-r 17``` or ```18``` or ```26``
+See <a href="https://chensokolovsky.github.io/FuzzerAmoreBlog/posts/ios_sandbox_profiles.html">blog post</a>.   
+Obtain the needed files. Use ```-r 17``` or ```18``` or ```26``.   
 Example:
 ```
 $ python3 reverse-sandbox/reverse_sandbox.py -r 26 -o ../ios_26_operations.txt -d ../results_ios26/platform ../ios26/platform.bin
