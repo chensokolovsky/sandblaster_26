@@ -300,8 +300,6 @@ def display_sandbox_profiles(infile, profiles_offset, num_profiles, base_addr):
 def get_global_vars(f, vars_offset, num_vars, base_address):
     global_vars = []
 
-    #vars_offset += 72
-
     next_var_pointer = vars_offset
     for i in range(0, num_vars):
         f.seek(next_var_pointer)
