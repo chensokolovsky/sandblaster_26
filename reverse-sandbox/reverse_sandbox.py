@@ -38,9 +38,10 @@ OPERATION_NODE_SIZE = 8
 INDEX_SIZE = 2
 
 class SandboxData():
-    def __init__(self,
+    def __init__(self, release, 
         ios16_struct_size, header, op_nodes_count, sb_ops_count, vars_count, states_count, num_profiles, regex_count, entitlements_count, instructions_count) -> None:
 
+        self.release = release
         self.data_file = None
 
         self.header_size = ios16_struct_size
@@ -54,13 +55,28 @@ class SandboxData():
         self.entitlements_count = entitlements_count
 
         # offsets
-        self.regex_table_offset = self.header_size
+        header_addition = 0
+        if release > 17:
+            header_addition = 2
+        self.regex_table_offset = self.header_size + header_addition
         self.vars_offset = self.regex_table_offset + (self.regex_count * INDEX_SIZE)
+        ent_size = INDEX_SIZE
+
         self.states_offset = self.vars_offset + (self.vars_count * INDEX_SIZE)
         self.entitlements_offset = self.states_offset + (self.states_count * INDEX_SIZE)
 
         self.profiles_offset = self.entitlements_offset + (self.entitlements_count * INDEX_SIZE)
-        self.profiles_end_offset = self.profiles_offset + (self.num_profiles * (self.sb_ops_count * INDEX_SIZE + PROFILE_OPS_OFFSET))
+        profile_ops_offset_size = PROFILE_OPS_OFFSET
+        if release > 17:
+            profile_ops_offset_size = 8
+        
+        ### another patch
+        if release > 17:
+            if entitlements_count > 0:
+                self.profiles_offset += 72
+                if release > 18:
+                    self.profiles_offset += 4
+        self.profiles_end_offset = self.profiles_offset + (self.num_profiles * (self.sb_ops_count * INDEX_SIZE + profile_ops_offset_size))
         self.operation_nodes_size = self.op_nodes_count * OPERATION_NODE_SIZE
         self.operation_nodes_offset = self.profiles_end_offset
 
@@ -70,8 +86,9 @@ class SandboxData():
         align_delta = self.operation_nodes_offset & 7
         if align_delta != 0:
             self.operation_nodes_offset += 8 - align_delta
-
+        
         self.base_addr = self.operation_nodes_offset + self.operation_nodes_size
+
 
         # data
         self.regex_list = None
@@ -130,7 +147,7 @@ def node_to_c(node):
 
     return out.strip()
 
-def parse_profile(infile) -> SandboxData:
+def parse_profile(infile, args) -> SandboxData:
     infile.seek(0)
 
     # ios 16+
@@ -145,9 +162,26 @@ def parse_profile(infile) -> SandboxData:
     instructions_count \
         = struct.unpack('<HHBBBxHHHH', infile.read(16))
 
-    sandbox_data = SandboxData(
-        ios16_5_struct.size, header, op_nodes_count, sb_ops_count, vars_count,
-        states_count, num_profiles, re_count, entitlements_count, instructions_count)
+
+    sandbox_data = None
+    if int(args.release) == 17:
+        sandbox_data = SandboxData(
+            int(args.release), ios16_5_struct.size, header, op_nodes_count, sb_ops_count, vars_count,
+            states_count, num_profiles, re_count, entitlements_count, instructions_count)
+        
+    else:
+        if header == 0:
+            sandbox_data = SandboxData(
+                int(args.release), ios16_5_struct.size, header, op_nodes_count, sb_ops_count, vars_count,
+                states_count, num_profiles, entitlements_count, re_count, instructions_count)
+        elif header == 0x8000:
+            sandbox_data = SandboxData(
+                int(args.release), ios16_5_struct.size, header, op_nodes_count, sb_ops_count, vars_count,
+                states_count, re_count, entitlements_count, num_profiles, instructions_count)
+        else:
+            print("ERRORRRR on header - unexpected value")
+    
+
 
     sandbox_data.data_file = infile
 
@@ -266,6 +300,8 @@ def display_sandbox_profiles(infile, profiles_offset, num_profiles, base_addr):
 def get_global_vars(f, vars_offset, num_vars, base_address):
     global_vars = []
 
+    #vars_offset += 72
+
     next_var_pointer = vars_offset
     for i in range(0, num_vars):
         f.seek(next_var_pointer)
@@ -311,8 +347,10 @@ def parse_regex_list(infile, sandbox_data):
         infile.seek(sandbox_data.regex_table_offset)
         re_offsets_table = struct.unpack("<%dH" % sandbox_data.regex_count, infile.read(2 * sandbox_data.regex_count))
 
+        offset_addition = 0
+      
         for offset in re_offsets_table:
-            infile.seek(offset * 8 + sandbox_data.base_addr)
+            infile.seek(offset * 8 + sandbox_data.base_addr + offset_addition)
             re_length = struct.unpack("<H", infile.read(2))[0]
             re = struct.unpack("<%dB" % re_length, infile.read(re_length))
             re_debug_str = "re: [", ", ".join([hex(i) for i in re]), "]"
@@ -359,7 +397,7 @@ def main():
 
     infile = open(args.filename, "rb")
 
-    sandbox_data = parse_profile(infile)
+    sandbox_data = parse_profile(infile, args)
 
     read_sandbox_operations(parser, args, sandbox_data)
 
@@ -389,6 +427,12 @@ def main():
         logger.info("using profile bundle")
 
         profile_size = (sandbox_data.sb_ops_count * 2) + 2 + 2 # + name + policy index
+        if int(args.release) > 17:
+            profile_size += 4
+
+        profile_ops_offset_size = PROFILE_OPS_OFFSET
+        if int(args.release) > 17:
+            profile_ops_offset_size += 4
 
         # read profiles
         for i in range(0, sandbox_data.num_profiles):
@@ -402,7 +446,7 @@ def main():
                     continue
             logger.info("profile name (offset 0x%x): %s" % (name_offset, name))
 
-            infile.seek(sandbox_data.profiles_offset + profile_size * i + PROFILE_OPS_OFFSET) # name + flags + policy index
+            infile.seek(sandbox_data.profiles_offset + profile_size * i + profile_ops_offset_size) # name + flags + policy index
 
             # operands to read for each profile
             op_table = struct.unpack("<%dH" % sandbox_data.sb_ops_count, infile.read(2 * sandbox_data.sb_ops_count))
