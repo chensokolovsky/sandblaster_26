@@ -37,3 +37,5 @@ test_result_26.0/collection/
 test_result_26.0.1/protobox/
 test_result_26.0.1/platform/
 test_result_26.0.1/collection/
+reverse-sandbox/__pycache__/
+reverse-sandbox/reverse.log
